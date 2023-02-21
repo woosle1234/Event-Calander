@@ -30,6 +30,7 @@ class Calander extends React.Component {
       date: "",
       loading: true,
       weekday: 0,
+      tableBody: [],
       games: [
         "MTG",
         "Yugioh",
@@ -332,11 +333,10 @@ class Calander extends React.Component {
         });
         this.setCalander();
         this.setDate();
-        console.log(data)
       })
       .catch((err) => {
         this.setState({ loading: false });
-        console.log("Cannot get data from 401 games");
+        console.log("Cannot get data from 401 games" + err);
       });
   }
 
@@ -1038,6 +1038,7 @@ class Calander extends React.Component {
       else table.push(line);
     }
     this.setState({ table: table, loading: false });
+    this.setTableBody(table);
   }
 
   setImage(item) {
@@ -1135,6 +1136,129 @@ class Calander extends React.Component {
     });
   }
 
+  setTableBody(table) {
+    let tb=[]
+    for(let idx=0;idx<table.length;idx++){
+      tb.push(<tr
+      key={idx}
+      style={{ maxWidth: "100vw" }}
+      className="table-dark"
+    >
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "sunday " + (this.state.weekday === 0 ? "bg-primary" : "")
+        }
+      >
+        <strong>{table[idx].sunday ? table[idx].sunday.title : ""}</strong>{" "}
+        <br />
+        <h4 className="text-warning">
+          <strong>{table[idx].sunday ? table[idx].sunday.time : ""}</strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].sunday)}
+      </td>
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "monday " + (this.state.weekday === 1 ? "bg-primary" : "")
+        }
+      >
+        <strong>{table[idx].monday ? table[idx].monday.title : ""}</strong>{" "}
+        <br />
+        <h4 className="text-warning">
+          <strong>{table[idx].monday ? table[idx].monday.time : ""}</strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].monday)}
+      </td>
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "tuesday " +
+          (this.state.weekday === 2 ? "bg-primary" : "")
+        }
+      >
+        <strong>{table[idx].tuesday ? table[idx].tuesday.title : ""}</strong>{" "}
+        <br />
+        <h4 className="text-warning">
+          <strong>{table[idx].tuesday ? table[idx].tuesday.time : ""}</strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].tuesday)}
+      </td>
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "wednesday " +
+          (this.state.weekday === 3 ? "bg-primary" : "")
+        }
+      >
+        <strong>
+          {table[idx].wednesday ? table[idx].wednesday.title : ""}
+        </strong>{" "}
+        <br />
+        <h4 className="text-warning">
+          <strong>
+            {table[idx].wednesday ? table[idx].wednesday.time : ""}
+          </strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].wednesday)}
+      </td>
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "thursday " +
+          (this.state.weekday === 4 ? "bg-primary" : "")
+        }
+      >
+        <strong>{table[idx].thursday ? table[idx].thursday.title : ""}</strong>
+        <br />
+        <h4 className="text-warning">
+          <strong>{table[idx].thursday ? table[idx].thursday.time : ""}</strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].thursday)}
+      </td>
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "friday " + (this.state.weekday === 5 ? "bg-primary" : "")
+        }
+      >
+        <strong>{table[idx].friday ? table[idx].friday.title : ""}</strong>
+        <br />
+        <h4 className="text-warning">
+          <strong>{table[idx].friday ? table[idx].friday.time : ""}</strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].friday)}
+      </td>
+      <td
+        style={{ maxWidth: "15vw" }}
+        className={
+          "saturday " +
+          (this.state.weekday === 6 ? "bg-primary" : "")
+        }
+      >
+        <strong>{table[idx].saturday ? table[idx].saturday.title : ""}</strong>
+        <br />
+        <h4 className="text-warning">
+          <strong>{table[idx].saturday ? table[idx].saturday.time : ""}</strong>
+        </h4>
+        <br />
+        {this.setImage(table[idx].saturday)}
+      </td>
+    </tr>)
+    }
+    console.log({ "tb": tb })
+    
+    this.setState({ tableBody: tb });
+  }
+
+
+
   render() {
     return !this.state.loading ? (
       <div
@@ -1153,122 +1277,7 @@ class Calander extends React.Component {
           style={{ minWidth: "100vw", minHeight: "1500px" }}
         >
           <tbody>
-            {this.state.table.map((item, index) => {
-              return (
-                <tr
-                  key={index}
-                  style={{ maxWidth: "100vw" }}
-                  className="table-dark"
-                >
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "sunday " + (this.state.weekday === 0 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>{item.sunday ? item.sunday.title : ""}</strong>{" "}
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>{item.sunday ? item.sunday.time : ""}</strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.sunday)}
-                  </td>
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "monday " + (this.state.weekday === 1 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>{item.monday ? item.monday.title : ""}</strong>{" "}
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>{item.monday ? item.monday.time : ""}</strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.monday)}
-                  </td>
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "tuesday " +
-                      (this.state.weekday === 2 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>{item.tuesday ? item.tuesday.title : ""}</strong>{" "}
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>{item.tuesday ? item.tuesday.time : ""}</strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.tuesday)}
-                  </td>
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "wednesday " +
-                      (this.state.weekday === 3 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>
-                      {item.wednesday ? item.wednesday.title : ""}
-                    </strong>{" "}
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>
-                        {item.wednesday ? item.wednesday.time : ""}
-                      </strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.wednesday)}
-                  </td>
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "thursday " +
-                      (this.state.weekday === 4 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>{item.thursday ? item.thursday.title : ""}</strong>
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>{item.thursday ? item.thursday.time : ""}</strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.thursday)}
-                  </td>
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "friday " + (this.state.weekday === 5 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>{item.friday ? item.friday.title : ""}</strong>
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>{item.friday ? item.friday.time : ""}</strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.friday)}
-                  </td>
-                  <td
-                    style={{ maxWidth: "15vw" }}
-                    className={
-                      "saturday " +
-                      (this.state.weekday === 6 ? "bg-primary" : "")
-                    }
-                  >
-                    <strong>{item.saturday ? item.saturday.title : ""}</strong>
-                    <br />
-                    <h4 className="text-warning">
-                      <strong>{item.saturday ? item.saturday.time : ""}</strong>
-                    </h4>
-                    <br />
-                    {this.setImage(item.saturday)}
-                  </td>
-                </tr>
-              );
-            })}
+            {this.state.tableBody}
           </tbody>
         </table>
       </div>
