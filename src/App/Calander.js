@@ -338,6 +338,8 @@ class Calander extends React.Component {
         this.setState({ loading: false });
         console.log("Cannot get data from 401 games" + err);
       });
+      this.setCalander();
+      this.setDate();
   }
 
   getYugiohEvents() {
