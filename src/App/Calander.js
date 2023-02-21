@@ -70,7 +70,6 @@ class Calander extends React.Component {
       .get(
         "https://store.401games.ca/collections/vaughan-events/products.json?limit=250"
       )
-
       .then((res) => {
         let data = res.data.products;
         let mon, tues, wed, thurs, fri, sat, sun, oth;
@@ -333,6 +332,7 @@ class Calander extends React.Component {
         });
         this.setCalander();
         this.setDate();
+        console.log(data)
       })
       .catch((err) => {
         this.setState({ loading: false });
