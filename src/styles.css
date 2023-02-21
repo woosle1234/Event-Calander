@@ -1,0 +1,25 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.days {
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+
+.eventDivText {
+  position: absolute;
+  z-index: 1000;
+  overflow-wrap: break-word;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+td strong {
+  font-family: Verdana, sans-serif;
+}
