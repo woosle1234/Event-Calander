@@ -333,7 +333,6 @@ class Calander extends React.Component {
           other: oth
         });
         this.setCalander();
-        this.setDate();
       })
       .catch((err) => {
         this.setState({ loading: false });
@@ -886,11 +885,11 @@ class Calander extends React.Component {
     }
   }
 
-  setDate() {
+  setDate(table) {
     //date
     let today = new Date(Date.now());
     this.setState({ date: today, weekday: today.getDay() });
-
+    this.setTableBody(table);
     this.playScroll();
   }
 
@@ -1039,8 +1038,8 @@ class Calander extends React.Component {
       if (set === 0) break;
       else table.push(line);
     }
-    this.setState({ table: table, loading: false });
-    this.setTableBody(table);
+    this.setState({ table: table });
+    this.setDate(table)
   }
 
   setImage(item) {
@@ -1257,6 +1256,7 @@ class Calander extends React.Component {
     console.log({ "tb": tb })
     
     this.setState({ tableBody: tb });
+    this.setState({ loading: tb === [] });
   }
 
 
