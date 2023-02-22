@@ -73,6 +73,7 @@ class Calander extends React.Component {
       )
       .then((res) => {
         let data = res.data.products;
+        console.log(data)
         let mon, tues, wed, thurs, fri, sat, sun, oth;
         mon = [];
         tues = [];
@@ -338,8 +339,7 @@ class Calander extends React.Component {
         this.setState({ loading: false });
         console.log("Cannot get data from 401 games" + err);
       });
-      this.setCalander();
-      this.setDate();
+      
   }
 
   getYugiohEvents() {
