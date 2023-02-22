@@ -889,7 +889,7 @@ class Calander extends React.Component {
     //date
     let today = new Date(Date.now());
     this.setState({ date: today, weekday: today.getDay() });
-    this.setTableBody(table);
+    this.setTableBody(table, today.getDay());
     this.playScroll();
   }
 
@@ -1137,7 +1137,7 @@ class Calander extends React.Component {
     });
   }
 
-  setTableBody(table) {
+  setTableBody(table, weekday) {
     let tb=[]
     for(let idx=0;idx<table.length;idx++){
       tb.push(<tr
@@ -1148,7 +1148,7 @@ class Calander extends React.Component {
       <td
         style={{ maxWidth: "15vw" }}
         className={
-          "sunday " + (this.state.weekday === 0 ? "bg-primary" : "")
+          "sunday " + (weekday === 0 ? "bg-primary" : "")
         }
       >
         <strong>{table[idx].sunday ? table[idx].sunday.title : ""}</strong>{" "}
@@ -1162,7 +1162,7 @@ class Calander extends React.Component {
       <td
         style={{ maxWidth: "15vw" }}
         className={
-          "monday " + (this.state.weekday === 1 ? "bg-primary" : "")
+          "monday " + (weekday === 1 ? "bg-primary" : "")
         }
       >
         <strong>{table[idx].monday ? table[idx].monday.title : ""}</strong>{" "}
@@ -1177,7 +1177,7 @@ class Calander extends React.Component {
         style={{ maxWidth: "15vw" }}
         className={
           "tuesday " +
-          (this.state.weekday === 2 ? "bg-primary" : "")
+          (weekday === 2 ? "bg-primary" : "")
         }
       >
         <strong>{table[idx].tuesday ? table[idx].tuesday.title : ""}</strong>{" "}
@@ -1192,7 +1192,7 @@ class Calander extends React.Component {
         style={{ maxWidth: "15vw" }}
         className={
           "wednesday " +
-          (this.state.weekday === 3 ? "bg-primary" : "")
+          (weekday === 3 ? "bg-primary" : "")
         }
       >
         <strong>
@@ -1211,7 +1211,7 @@ class Calander extends React.Component {
         style={{ maxWidth: "15vw" }}
         className={
           "thursday " +
-          (this.state.weekday === 4 ? "bg-primary" : "")
+          (weekday === 4 ? "bg-primary" : "")
         }
       >
         <strong>{table[idx].thursday ? table[idx].thursday.title : ""}</strong>
@@ -1225,7 +1225,7 @@ class Calander extends React.Component {
       <td
         style={{ maxWidth: "15vw" }}
         className={
-          "friday " + (this.state.weekday === 5 ? "bg-primary" : "")
+          "friday " + (weekday === 5 ? "bg-primary" : "")
         }
       >
         <strong>{table[idx].friday ? table[idx].friday.title : ""}</strong>
@@ -1240,7 +1240,7 @@ class Calander extends React.Component {
         style={{ maxWidth: "15vw" }}
         className={
           "saturday " +
-          (this.state.weekday === 6 ? "bg-primary" : "")
+          (weekday === 6 ? "bg-primary" : "")
         }
       >
         <strong>{table[idx].saturday ? table[idx].saturday.title : ""}</strong>
