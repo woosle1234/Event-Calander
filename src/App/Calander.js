@@ -332,7 +332,7 @@ class Calander extends React.Component {
           sunday: sun,
           other: oth
         });
-        this.setCalander();
+        this.setCalander(oth, mon, tues, wed, thurs, fri, sat, sun);
       })
       .catch((err) => {
         this.setState({ loading: false });
@@ -988,50 +988,50 @@ class Calander extends React.Component {
     return time;
   }
 
-  setCalander() {
+  setCalander(oth, mon, tues, wed, thurs, fri, sat, sun) {
     let table = [];
     for (let i = 0; i < 30; i++) {
       let line = [];
       let set = 0;
-      if (this.state.sunday[i] !== undefined) {
+      if (sun[i] !== undefined) {
         set = 1;
-        line["sunday"] = this.state.sunday[i];
+        line["sunday"] = sun[i];
       } else {
         line["sunday"] = undefined;
       }
-      if (this.state.monday[i] !== undefined) {
+      if (mon[i] !== undefined) {
         set = 1;
-        line["monday"] = this.state.monday[i];
+        line["monday"] = mon[i];
       } else {
         line["monday"] = undefined;
       }
-      if (this.state.tuesday[i] !== undefined) {
+      if (tues[i] !== undefined) {
         set = 1;
-        line["tuesday"] = this.state.tuesday[i];
+        line["tuesday"] = tues[i];
       } else {
         line["tuesday"] = undefined;
       }
-      if (this.state.wednesday[i] !== undefined) {
+      if (wed[i] !== undefined) {
         set = 1;
-        line["wednesday"] = this.state.wednesday[i];
+        line["wednesday"] = wed[i];
       } else {
         line["wednesday"] = undefined;
       }
-      if (this.state.thursday[i] !== undefined) {
+      if (thurs[i] !== undefined) {
         set = 1;
-        line["thursday"] = this.state.thursday[i];
+        line["thursday"] = thurs[i];
       } else {
         line["thursday"] = undefined;
       }
-      if (this.state.friday[i] !== undefined) {
+      if (fri[i] !== undefined) {
         set = 1;
-        line["friday"] = this.state.friday[i];
+        line["friday"] = fri[i];
       } else {
         line["friday"] = undefined;
       }
-      if (this.state.saturday[i] !== undefined) {
+      if (sat[i] !== undefined) {
         set = 1;
-        line["saturday"] = this.state.saturday[i];
+        line["saturday"] = sat[i];
       } else {
         line["saturday"] = undefined;
       }
