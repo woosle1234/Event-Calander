@@ -73,7 +73,6 @@ class Calander extends React.Component {
       )
       .then((res) => {
         let data = res.data.products;
-        console.log(data)
         let mon, tues, wed, thurs, fri, sat, sun, oth;
         mon = [];
         tues = [];
@@ -816,7 +815,6 @@ class Calander extends React.Component {
             if (splitTitle[2]) splitTitle[2] = splitTitle[2].replace("@", "");
             else {
               oth[i].time = this.getTime(oth[i]);
-              console.log(oth[i].time);
             }
             let newParseTitle = splitTitle.slice(0, 2);
             newParseTitle.push(today.getFullYear());
@@ -1253,7 +1251,6 @@ class Calander extends React.Component {
       </td>
     </tr>)
     }
-    console.log({ "tb": tb })
     
     this.setState({ tableBody: tb });
     this.setState({ loading: tb === [] });

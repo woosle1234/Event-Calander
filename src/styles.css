@@ -23,3 +23,17 @@
 td strong {
   font-family: Verdana, sans-serif;
 }
+
+.saleImg{
+  height: 100% !important;
+  width: auto !important;
+}
+
+#animate{
+  animation: "example" 45s;
+}
+
+@keyframes example {
+  from {top:0px}
+  to {top:-2800px}
+}

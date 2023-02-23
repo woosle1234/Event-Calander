@@ -9,6 +9,7 @@ import slide4 from "../Asset/slides/slide 4.png";
 import slide5 from "../Asset/slides/slide 5.png";
 import slide6 from "../Asset/slides/slide 6.png";
 import EventSlide from "./EventSlide.js";
+import Sales from "./Sales.js";
 
 class Main extends React.Component {
   constructor(props) {
@@ -20,26 +21,37 @@ class Main extends React.Component {
       digimonText: "Test",
       weissText: "Test",
       onepieceText: "Test",
-      currentSlide: 0
+      currentSlide: 0,
+      salesComponent: <div style={{ width: "100vw", height: "100vh" }}>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
     };
   }
 
   async componentDidMount() {
-    this.loopSlide();
+    this.loopSlide(0);
   }
 
-  loopSlide() {
-    let curr = this.state.currentSlide;
+  loopSlide(idx) {
+    let curr = idx;
+
     if (curr === 0) {
       setTimeout(() => {
         if (this.state.currentSlide === curr)
           this.setState({ currentSlide: curr + 1 });
       }, 25000);
+    } else if (curr === 7) {
+      setTimeout(() => {
+        if (this.state.currentSlide === curr)
+          this.setState({ currentSlide: 0 });
+      }, 40000);
     } else {
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
           let nextSlide = curr + 1;
-          if (nextSlide > 6) nextSlide = 0;
+          if (nextSlide > 7) nextSlide = 0;
           this.setState({ currentSlide: nextSlide });
         }
       }, 10000);
@@ -48,53 +60,73 @@ class Main extends React.Component {
 
   calanaderChange(idx) {
     this.setState({ currentSlide: idx });
+
     switch (idx) {
       case 0:
         window.calanderComponent.playScroll();
-        this.loopSlide();
+        
+        this.loopSlide(idx);
         break;
       case 1:
         this.setState({
           yugiohText: window.calanderComponent.getYugiohEvents()
         });
-        this.loopSlide();
+        this.loopSlide(idx);
+        window.calanderComponent.resetScroll();
         break;
       case 2:
         this.setState({
           magicText: window.calanderComponent.getMagicEvents()
         });
-        this.loopSlide();
+        this.loopSlide(idx);
         break;
       case 3:
         this.setState({
           pokemonText: window.calanderComponent.getPokemonEvents()
         });
-        this.loopSlide();
+        this.loopSlide(idx);
         break;
       case 4:
         this.setState({
           digimonText: window.calanderComponent.getDigimonEvents()
         });
-        this.loopSlide();
+        this.loopSlide(idx);
         break;
       case 5:
         this.setState({
           weissText: window.calanderComponent.getWeissEvents()
         });
-        this.loopSlide();
+        this.loopSlide(idx);
         break;
       case 6:
         this.setState({
           onepieceText: window.calanderComponent.getOnePieceEvents()
         });
-        this.loopSlide();
+        this.loopSlide(idx);
+        
+        break;
+      case 7:
+        this.loopSlide(idx);
+        this.setState({
+          salesComponent: <div style={{ width: "100vw", height: "100vh" }}>
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        })
+        setTimeout(()=>{
+          this.setState({ salesComponent: <Sales /> })
+        },1)
+        
         window.calanderComponent.resetScroll();
         break;
       default:
-        this.loopSlide();
+        this.loopSlide(idx);
+        
         window.calanderComponent.resetScroll();
         break;
     }
+
   }
 
   render() {
@@ -187,7 +219,7 @@ class Main extends React.Component {
           height: "46vh",
           left: "6vw",
           bottom: "10vh"
-          
+
         }}
           text1={this.state.digimonText[0]}
           text2={this.state.digimonText[1]}
@@ -218,6 +250,16 @@ class Main extends React.Component {
           text3={this.state.onepieceText[2]}
           image={slide6}
         />
+
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            padding: 0
+          }}
+        >
+          {this.state.salesComponent}
+        </div>
 
       </Carousel>
     );
