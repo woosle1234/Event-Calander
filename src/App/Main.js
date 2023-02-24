@@ -61,13 +61,13 @@ class Main extends React.Component {
       if (this.state.addOnSlide.length <= 0) {
         setTimeout(() => {
           if (this.state.currentSlide === curr) {
-            this.setState({ currentSlide: curr + 1 });
+            this.setState({ currentSlide: 0 });
           }
         }, 40000);
       } else {
         setTimeout(() => {
           if (this.state.currentSlide === curr) {
-            this.setState({ currentSlide: 0 });
+            this.setState({ currentSlide: curr + 1 });
           }
         }, 10000);
       }
