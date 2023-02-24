@@ -57,15 +57,23 @@ class Main extends React.Component {
           this.setState({ currentSlide: curr + 1 });
       }, 25000);
     } else if (curr === 7) {
+      if(this.state.addOnSlide.length<=0){
+        setTimeout(() => {
+          if (this.state.currentSlide === curr){
+            this.setState({ currentSlide: 0 });
+          }
+        }, 10000);
+      }else
       setTimeout(() => {
-        if (this.state.currentSlide === curr)
+        if (this.state.currentSlide === curr){
           this.setState({ currentSlide: 0 });
+        }
       }, 40000);
     } else {
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
           let nextSlide = curr + 1;
-          if (nextSlide > 7) nextSlide = 0;
+          if (nextSlide > 7+this.state.addOnSlide.length) nextSlide = 0;
           this.setState({ currentSlide: nextSlide });
         }
       }, 10000);
