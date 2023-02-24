@@ -49,6 +49,7 @@ class Main extends React.Component {
   }
 
   loopSlide(idx) {
+    /*
     let curr = idx;
 
     if (curr === 0) {
@@ -78,6 +79,7 @@ class Main extends React.Component {
         }
       }, 10000);
     }
+    */
   }
 
   calanaderChange(idx) {
