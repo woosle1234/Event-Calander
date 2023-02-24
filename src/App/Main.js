@@ -10,6 +10,8 @@ import slide5 from "../Asset/slides/slide 5.png";
 import slide6 from "../Asset/slides/slide 6.png";
 import EventSlide from "./EventSlide.js";
 import Sales from "./Sales.js";
+import Slides from "./Slides.js";
+import axios from "axios";
 
 class Main extends React.Component {
   constructor(props) {
@@ -26,12 +28,24 @@ class Main extends React.Component {
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
-      </div>
+      </div>,
+      addOnSlide:[],
+      loading: true
     };
   }
 
   async componentDidMount() {
     this.loopSlide(0);
+    await axios.get("https://vaughan-display-server.vercel.app/ids")
+    .then(res=>{
+      this.setState({addOnSlide: res.data});
+      setTimeout(() => {
+        this.setState({loading: false})
+      }, 1);
+    })
+    .catch(err=>{
+      console.log(err)
+    })
   }
 
   loopSlide(idx) {
@@ -130,8 +144,10 @@ class Main extends React.Component {
   }
 
   render() {
-    return (
-      <Carousel
+    return this.state.loading ? (<div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>):
+    (<Carousel
         showThumbs={false}
         showIndicators={false}
         showStatus={false}
@@ -260,9 +276,14 @@ class Main extends React.Component {
         >
           {this.state.salesComponent}
         </div>
+        {
+          this.state.addOnSlide.map((v,i)=>{
+            return <Slides image={"https://vaughan-display-server.vercel.app/image/"+v._id} />
+          })
+        }
 
-      </Carousel>
-    );
+
+      </Carousel>);
   }
 }
 
