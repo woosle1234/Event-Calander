@@ -29,7 +29,7 @@ class Main extends React.Component {
           <span className="visually-hidden">Loading...</span>
         </div>
       </div>,
-      addOnSlide:[],
+      addOnSlide: [],
       loading: true
     };
   }
@@ -37,19 +37,19 @@ class Main extends React.Component {
   async componentDidMount() {
     this.loopSlide(0);
     await axios.get("https://vaughan-display-server.vercel.app/ids")
-    .then(res=>{
-      this.setState({addOnSlide: res.data});
-      setTimeout(() => {
-        this.setState({loading: false})
-      }, 1);
-    })
-    .catch(err=>{
-      console.log(err)
-    })
+      .then(res => {
+        this.setState({ addOnSlide: res.data });
+        setTimeout(() => {
+          this.setState({ loading: false })
+        }, 1);
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   loopSlide(idx) {
-    
+
     let curr = idx;
 
     if (curr === 0) {
@@ -58,28 +58,29 @@ class Main extends React.Component {
           this.setState({ currentSlide: curr + 1 });
       }, 25000);
     } else if (curr === 7) {
-      if(this.state.addOnSlide.length<=0){
+      if (this.state.addOnSlide.length <= 0) {
         setTimeout(() => {
-          if (this.state.currentSlide === curr){
+          if (this.state.currentSlide === curr) {
+            this.setState({ currentSlide: curr + 1 });
+          }
+        }, 40000);
+      } else {
+        setTimeout(() => {
+          if (this.state.currentSlide === curr) {
             this.setState({ currentSlide: 0 });
           }
         }, 10000);
-      }else
-      setTimeout(() => {
-        if (this.state.currentSlide === curr){
-          this.setState({ currentSlide: 0 });
-        }
-      }, 40000);
+      }
     } else {
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
           let nextSlide = curr + 1;
-          if (nextSlide > 7+this.state.addOnSlide.length) nextSlide = 0;
+          if (nextSlide > 7 + this.state.addOnSlide.length) nextSlide = 0;
           this.setState({ currentSlide: nextSlide });
         }
       }, 10000);
     }
-    
+
   }
 
   calanaderChange(idx) {
@@ -88,7 +89,7 @@ class Main extends React.Component {
     switch (idx) {
       case 0:
         window.calanderComponent.playScroll();
-        
+
         this.loopSlide(idx);
         break;
       case 1:
@@ -127,7 +128,7 @@ class Main extends React.Component {
           onepieceText: window.calanderComponent.getOnePieceEvents()
         });
         this.loopSlide(idx);
-        
+
         break;
       case 7:
         this.loopSlide(idx);
@@ -138,15 +139,15 @@ class Main extends React.Component {
             </div>
           </div>
         })
-        setTimeout(()=>{
+        setTimeout(() => {
           this.setState({ salesComponent: <Sales /> })
-        },1)
-        
+        }, 1)
+
         window.calanderComponent.resetScroll();
         break;
       default:
         this.loopSlide(idx);
-        
+
         window.calanderComponent.resetScroll();
         break;
     }
@@ -155,9 +156,9 @@ class Main extends React.Component {
 
   render() {
     return this.state.loading ? (<div className="spinner-border" role="status">
-    <span className="visually-hidden">Loading...</span>
-  </div>):
-    (<Carousel
+      <span className="visually-hidden">Loading...</span>
+    </div>) :
+      (<Carousel
         showThumbs={false}
         showIndicators={false}
         showStatus={false}
@@ -287,8 +288,8 @@ class Main extends React.Component {
           {this.state.salesComponent}
         </div>
         {
-          this.state.addOnSlide.map((v,i)=>{
-            return <Slides image={"https://vaughan-display-server.vercel.app/image/"+v._id} />
+          this.state.addOnSlide.map((v, i) => {
+            return <Slides image={"https://vaughan-display-server.vercel.app/image/" + v._id} />
           })
         }
 
