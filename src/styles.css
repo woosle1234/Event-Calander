@@ -34,7 +34,7 @@ td strong {
 /*-5600px*/
 @keyframes example {
   from {top:0px}
-  to {top:-7000px}
+  to {top:-5500px}
 }
 
 .listItemTitle{
