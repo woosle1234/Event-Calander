@@ -67,7 +67,7 @@ class Main extends React.Component {
               this.setState({ currentSlide: curr + 1 });
             }
           }
-        }, 55000);
+        }, 50000);
     } else {
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
