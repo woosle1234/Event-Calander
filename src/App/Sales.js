@@ -216,13 +216,13 @@ class Sales extends React.Component {
                 <span className="visually-hidden">Loading...</span>
             </div>
         ) : (<div style={{ overflowY: "auto", minWidth: "100vw", minHeight: "100vh", backgroundColor: "rgba(71,138,64,255)" }}>
-            <div className="d-flex align-items-center justify-content-center" style={{ width: "100vw", height: "188px", position: "absolute", zIndex: 10}}>
+            <div className="d-flex align-items-center justify-content-center" style={{ width: "100vw", height: "150px", position: "absolute", zIndex: 10}}>
 
                 <img style={{ height: "auto", width: "100%"}} src={header} alt="..." />
 
             </div>
 
-            <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 170s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
+            <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 160s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
                 <tbody>
                     <tr colspan="100%" key="-1" style={{ height: "300px", padding:0 }}>
                         <td style={{ padding:0, margin:0 }}>
