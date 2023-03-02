@@ -222,7 +222,7 @@ class Sales extends React.Component {
 
             </div>
 
-            <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 160s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
+            <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 130s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
                 <tbody>
                     <tr colspan="100%" key="-1" style={{ height: "300px", padding:0 }}>
                         <td style={{ padding:0, margin:0 }}>
