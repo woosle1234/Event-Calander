@@ -144,18 +144,18 @@ class Sales extends React.Component {
                             <div className="row ">
                                 <div className="col-auto" >
                                     <div className="container" style={{ padding: "10px", height: "385px", width:"auto"}}>
-                                        <img src={row.image} alt="..." style={{maxHeight:"365px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
+                                        <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
                                     </div>
                                 </div>
                                 <div className="col" style={{paddingTop:"30px"}}>
-                                    <h1 className="listItemTitle" style={{color:"white", fontSize:"60px"}} data-text={row.title}><b>{row.title}</b></h1>
-                                    <h3 className="listItemVendor" style={{fontSize:"40px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
+                                    <h1 className="listItemTitle" style={{color:"white", fontSize:"50px"}} data-text={row.title}><b>{row.title}</b></h1>
+                                    <h3 className="listItemVendor" style={{fontSize:"30px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
                                 </div>
                                 <div className="col"  style={{paddingTop:"30px"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
                                         <strong>
-                                            <h1 style={{fontSize:"150px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
-                                            <h3 style={{fontSize:"75px", color: "red", fontFamily: 'Karla' }}><del><em>${row.comparePrice}</em></del></h3>
+                                            <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
+                                            <h3 style={{fontSize:"50px", color: "red", fontFamily: 'Karla' }}><del><em>${row.comparePrice}</em></del></h3>
                                             
                                         </strong>
                                     ) : (
