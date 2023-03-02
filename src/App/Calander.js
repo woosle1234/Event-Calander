@@ -87,14 +87,15 @@ class Calander extends React.Component {
             oth.push(data[i]);
             let time = [];
             for (let x = 0; x < data[i].variants.length; x++) {
-              let title = data[i].variants[x].title;
+              let title = data[i].variants[x].title.toUpperCase();
+              
               let timeStr = title.substring(
                 title.includes("PM")
                   ? title.indexOf("PM") - 6
                   : title.indexOf("AM") - 6,
-                data[i].variants[x].title.includes("PM")
-                  ? data[i].variants[x].title.indexOf("PM") + 2
-                  : data[i].variants[x].title.indexOf("AM") + 2
+                  title.includes("PM")
+                  ? title.indexOf("PM") + 2
+                  : title.indexOf("AM") + 2
               );
               if (timeStr.includes("@")) {
                 timeStr = timeStr.substring(timeStr.indexOf("@") + 1);
@@ -108,6 +109,7 @@ class Calander extends React.Component {
                   timeStr.slice(0, index) + ":00 " + timeStr.slice(index);
               }
               timeStr = timeStr.replaceAll("t", "");
+              
               time.push(timeStr.trim());
             }
 

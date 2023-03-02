@@ -11,7 +11,9 @@ class EventSlide extends React.Component {
           className="d-flex justify-content-center align-items-center"
           style={{
             padding: 0,
-            backgroundColor: "black"
+            margin: 0,
+            backgroundColor: "black",
+            height:"100vh"
           }}
         >
           <div
@@ -30,9 +32,7 @@ class EventSlide extends React.Component {
           </div>
           <img
             style={{
-              maxHeight: "100vh",
-              maxWidth: "100wh",
-              width: "auto",
+              width: "100%",
               height: "auto"
             }}
             src={this.props.image}

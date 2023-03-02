@@ -49,6 +49,7 @@ class Main extends React.Component {
   }
 
   loopSlide(idx) {
+    
 
     let curr = idx;
 
@@ -58,19 +59,15 @@ class Main extends React.Component {
           this.setState({ currentSlide: curr + 1 });
       }, 25000);
     } else if (curr === 7) {
-      if (this.state.addOnSlide.length <= 0) {
         setTimeout(() => {
           if (this.state.currentSlide === curr) {
-            this.setState({ currentSlide: 0 });
+            if (this.state.addOnSlide.length <= 0) {
+              this.setState({ currentSlide: 0 });
+            }else{
+              this.setState({ currentSlide: curr + 1 });
+            }
           }
-        }, 40000);
-      } else {
-        setTimeout(() => {
-          if (this.state.currentSlide === curr) {
-            this.setState({ currentSlide: curr + 1 });
-          }
-        }, 10000);
-      }
+        }, 55000);
     } else {
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
@@ -80,7 +77,7 @@ class Main extends React.Component {
         }
       }, 10000);
     }
-
+    
   }
 
   calanaderChange(idx) {
@@ -209,7 +206,9 @@ class Main extends React.Component {
           width: "44vw",
           height: "46vh",
           right: "8vw",
-          bottom: "13vh"
+          bottom: "13vh",
+          padding: 0,
+          margin: 0
         }}
           text1={this.state.yugiohText[0]}
           text2={this.state.yugiohText[1]}
@@ -221,7 +220,9 @@ class Main extends React.Component {
           width: "44vw",
           height: "46vh",
           left: "6vw",
-          bottom: "10vh"
+          bottom: "10vh",
+          padding: 0,
+          margin: 0
         }}
           text1={this.state.magicText[0]}
           text2={this.state.magicText[1]}
@@ -233,7 +234,9 @@ class Main extends React.Component {
           width: "44vw",
           height: "46vh",
           right: "6vw",
-          bottom: "10vh"
+          bottom: "10vh",
+          padding: 0,
+          margin: 0
         }}
           text1={this.state.pokemonText[0]}
           text2={this.state.pokemonText[1]}
@@ -245,7 +248,9 @@ class Main extends React.Component {
           width: "44vw",
           height: "46vh",
           left: "6vw",
-          bottom: "10vh"
+          bottom: "10vh",
+          padding: 0,
+          margin: 0
 
         }}
           text1={this.state.digimonText[0]}
@@ -258,7 +263,9 @@ class Main extends React.Component {
           width: "44vw",
           height: "46vh",
           right: "6vw",
-          bottom: "10vh"
+          bottom: "10vh",
+          padding: 0,
+          margin: 0
         }}
           text1={this.state.weissText[0]}
           text2={this.state.weissText[1]}
@@ -270,7 +277,9 @@ class Main extends React.Component {
           width: "44vw",
           height: "46vh",
           left: "6vw",
-          bottom: "10vh"
+          bottom: "10vh",
+          padding: 0,
+          margin: 0
         }}
           text1={this.state.onepieceText[0]}
           text2={this.state.onepieceText[1]}
@@ -282,7 +291,9 @@ class Main extends React.Component {
           style={{
             width: "100vw",
             height: "100vh",
-            padding: 0
+            padding: 0,
+            margin: 0
+            
           }}
         >
           {this.state.salesComponent}

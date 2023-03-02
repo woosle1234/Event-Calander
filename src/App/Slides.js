@@ -24,10 +24,10 @@ class Slides extends React.Component {
           }}
         >
           <img src={this.props.image} style={{
-            maxHeight: "100vh",
-            maxWidth: "100vw",
-            width: "auto",
-            height: "auto"
+            width: "100%",
+            height: "auto",
+            padding: 0,
+            margin: 0
           }} alt=".." />
           
         </div>
