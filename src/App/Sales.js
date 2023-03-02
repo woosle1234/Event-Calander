@@ -136,7 +136,7 @@ class Sales extends React.Component {
         return (
             <tr  key={key} style={{ padding: "10px", margin: 0, width: "100vw" }}>
                 <td colspan="100%" style={{ width: "inherit" }}>
-                    <div className={clas} style={{ position: "relative", width: "100%", animationDelay:`${(key)*4.7}s` }}>
+                    <div className={clas} style={{ position: "relative", width: "100%", animationDelay:`${(key)*4.8}s` }}>
                         <div style={{ width: "100%", margin: "auto", zIndex: 0 }}>
                             <img className="listitembg"style={{ width: "inherit", height: "auto" }} src={src} alt="..." />
                         </div>
@@ -222,7 +222,7 @@ class Sales extends React.Component {
 
             </div>
 
-            <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 150s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
+            <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 170s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
                 <tbody>
                     <tr colspan="100%" key="-1" style={{ height: "300px", padding:0 }}>
                         <td style={{ padding:0, margin:0 }}>
