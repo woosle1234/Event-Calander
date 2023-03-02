@@ -136,7 +136,7 @@ class Sales extends React.Component {
         return (
             <tr  key={key} style={{ padding: "10px", margin: 0, width: "100vw" }}>
                 <td colspan="100%" style={{ width: "inherit" }}>
-                    <div className={clas} style={{ position: "relative", width: "100%", animationDelay:`${(key)*(4.8-(key*0.1))}s` }}>
+                    <div className={clas} style={{ position: "relative", width: "100%", animationDelay:`${(key)*(5-(key*0.1))}s` }}>
                         <div style={{ width: "100%", margin: "auto", zIndex: 0 }}>
                             <img className="listitembg"style={{ width: "inherit", height: "auto" }} src={src} alt="..." />
                         </div>
