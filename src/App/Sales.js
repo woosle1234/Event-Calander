@@ -147,8 +147,8 @@ class Sales extends React.Component {
                                         <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
                                     </div>
                                 </div>
-                                <div className="col" style={{paddingTop:"30px"}}>
-                                    <h1 className="listItemTitle" style={{color:"white", fontSize:"50px"}} data-text={row.title}><b>{row.title}</b></h1>
+                                <div className="col" style={{paddingTop:"25px"}}>
+                                    <h1 className="listItemTitle" style={{color:"white", fontSize:"47px"}} data-text={row.title}><b>{row.title}</b></h1>
                                     <h3 className="listItemVendor" style={{fontSize:"30px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
                                 </div>
                                 <div className="col"  style={{paddingTop:"30px"}}>
