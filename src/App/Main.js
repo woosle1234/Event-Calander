@@ -13,7 +13,10 @@ import Sales from "./Sales.js";
 import Slides from "./Slides.js";
 import axios from "axios";
 
+let timer = null
+
 class Main extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +33,8 @@ class Main extends React.Component {
         </div>
       </div>,
       addOnSlide: [],
-      loading: true
+      loading: true,
+      timer: null
     };
   }
 
@@ -49,16 +53,30 @@ class Main extends React.Component {
   }
 
   loopSlide(idx) {
-    
 
     let curr = idx;
+    this.setState({ currentSlide: idx });
+
+    if(timer !== null)
+      clearTimeout(timer);
 
     if (curr === 0) {
-      setTimeout(() => {
+      timer=setTimeout(() => {
+        this.setState({ currentSlide: 1 });
+      }, 25000)
+      /*setTimeout(() => {
         if (this.state.currentSlide === curr)
           this.setState({ currentSlide: curr + 1 });
-      }, 25000);
+      }, 25000);*/
     } else if (curr === 7) {
+      timer=setTimeout(() => {
+          if (this.state.addOnSlide.length <= 0) {
+            this.setState({ currentSlide: 0 });
+          }else{
+            this.setState({ currentSlide: this.state.currentSlide + 1 });
+          }
+      }, 52000)
+      /*
         setTimeout(() => {
           if (this.state.currentSlide === curr) {
             if (this.state.addOnSlide.length <= 0) {
@@ -67,15 +85,27 @@ class Main extends React.Component {
               this.setState({ currentSlide: curr + 1 });
             }
           }
-        }, 50000);
+        }, 52000);
+        */
     } else {
+      timer=setTimeout(() => {
+        
+          let nextSlide = this.state.currentSlide + 1;
+          if (nextSlide > 7 + this.state.addOnSlide.length) 
+            nextSlide = 0;
+          this.setState({ currentSlide: nextSlide });
+        
+      }, 10000)
+      /*
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
           let nextSlide = curr + 1;
-          if (nextSlide > 7 + this.state.addOnSlide.length) nextSlide = 0;
+          if (nextSlide > 7 + this.state.addOnSlide.length) 
+            nextSlide = 0;
           this.setState({ currentSlide: nextSlide });
         }
       }, 10000);
+      */
     }
     
   }
