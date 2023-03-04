@@ -150,7 +150,7 @@ class Sales extends React.Component {
                                 <div className="col">
                                     <div className="d-flex align-items-center justify-content-center" style={{height:"385px"}}>
                                         <b>
-                                        <h1 className="listItemTitle" style={{color:"white", fontSize:"60px"}} data-text={row.title}><b>{row.title}</b></h1>
+                                        <h1 className="listItemTitle" style={{color:"white", fontSize:"45px"}} data-text={row.title}><b>{row.title}</b></h1>
                                         <h3 className="listItemVendor" style={{fontSize:"30px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
                                         </b>
                                     </div>
