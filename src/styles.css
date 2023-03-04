@@ -43,7 +43,7 @@ td strong {
 
 .listItemTitle::after{
   content: attr(data-text);
-  -webkit-text-stroke: 5px black;
+  -webkit-text-stroke: 10px black;
   color: #844733;
   position: absolute;
   left: 0;
