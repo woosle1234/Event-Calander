@@ -135,7 +135,7 @@ class Sales extends React.Component {
 
         return (
             <tr  key={key} style={{ padding: "10px", margin: 0, width: "100vw" }}>
-                <td colSpan="100%" style={{ width: "inherit" }}>
+                <td className="align-middle" colSpan="100%" style={{ width: "inherit" }}>
                     <div className={clas} style={{ position: "relative", width: "100%", animationDelay:`${(key)*(5-(key*0.1))}s` }}>
                         <div style={{ width: "100%", margin: "auto", zIndex: 0 }}>
                             <img className="listitembg"style={{ width: "inherit", height: "auto" }} src={src} alt="..." />
@@ -148,7 +148,7 @@ class Sales extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="d-flex align-items-center justify-content-center" style={{height:"385px", maxHeight:"385px"}}>
+                                    <div style={{height:"385px", maxHeight:"385px"}}>
                                         <b style={{ maxHeight:"385px"}}>
                                         <h1 className="listItemTitle" style={{color:"white", fontSize:"45px"}} data-text={row.title}><b>{row.title}</b></h1>
                                         <h3 className="listItemVendor" style={{fontSize:"30px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
@@ -156,7 +156,7 @@ class Sales extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-auto" >
-                                    <div className="d-flex align-items-center justify-content-center" style={{height:"385px", maxHeight:"385px"}}>
+                                    <div className="container align-items-center justify-content-center" style={{height:"385px", maxHeight:"385px"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
                                         <strong style={{padding:"40px", maxHeight:"385px"}}>
                                             <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
