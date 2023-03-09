@@ -156,7 +156,7 @@ class Sales extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-auto" >
-                                    <div className="container align-items-center justify-content-center" style={{height:"385px", maxHeight:"385px"}}>
+                                    <div style={{height:"385px", maxHeight:"385px"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
                                         <strong style={{padding:"40px", maxHeight:"385px"}}>
                                             <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
