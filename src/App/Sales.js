@@ -141,7 +141,7 @@ class Sales extends React.Component {
                             <img className="listitembg"style={{ width: "inherit", height: "auto" }} src={src} alt="..." />
                         </div>
                         <div style={{ position: "absolute", zIndex: 1, width: "100%", top: 0}}>
-                            <div className="row ">
+                            <div className="row align-middle">
                                 <div className="col-auto" >
                                     <div className="container" style={{ padding: "10px", height: "385px", width:"auto"}}>
                                         <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
@@ -158,12 +158,12 @@ class Sales extends React.Component {
                                 <div className="col-auto" >
                                     <div style={{height:"385px", maxHeight:"385px"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
-                                        <strong style={{ maxHeight:"385px", padding:"0 calc(50% - 160px)"}}>
+                                        <strong style={{ maxHeight:"385px"}}>
                                             <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
                                             <h3 style={{fontSize:"50px", color: "red", fontFamily: 'Karla' }}><del><em>${row.comparePrice}</em></del></h3>
                                         </strong>
                                     ) : (
-                                        <strong style={{ maxHeight:"385px", padding:"0 calc(50% - 160px)"}}>
+                                        <strong style={{ maxHeight:"385px"}}>
                                             <h1 style={{ color: "yellow" , maxHeight:"385px"}}><b>${row.price}</b></h1>
                                         </strong>
                                     )
