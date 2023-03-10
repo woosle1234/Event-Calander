@@ -82,3 +82,8 @@ td strong {
   -webkit-filter: drop-shadow(0 0 20px lightgreen);
   filter: drop-shadow(0 0 20px lightgreen);
 }
+
+.vertCenter{
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

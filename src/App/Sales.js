@@ -148,24 +148,24 @@ class Sales extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div style={{height:"385px", maxHeight:"385px"}}>
-                                        <b style={{ maxHeight:"385px", padding:"0 calc(50% - 160px)"}}>
+                                    <div style={{height:"385px", maxHeight:"385px",position: "relative"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%"}}>
                                             <h1 className="listItemTitle" style={{color:"white", fontSize:"45px"}} data-text={row.title}><b>{row.title}</b></h1>
                                             <h3 className="listItemVendor" style={{fontSize:"30px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
-                                        </b>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-auto" >
-                                    <div style={{height:"385px", maxHeight:"385px"}}>
+                                    <div style={{height:"385px", maxHeight:"385px",position: "relative"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
-                                        <strong style={{ maxHeight:"385px"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%"}}>
                                             <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
                                             <h3 style={{fontSize:"50px", color: "red", fontFamily: 'Karla' }}><del><em>${row.comparePrice}</em></del></h3>
-                                        </strong>
+                                        </div>
                                     ) : (
-                                        <strong style={{ maxHeight:"385px"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%"}}>
                                             <h1 style={{ color: "yellow" , maxHeight:"385px"}}><b>${row.price}</b></h1>
-                                        </strong>
+                                        </div>
                                     )
                                     }
                                     </div>
