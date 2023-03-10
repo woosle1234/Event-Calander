@@ -147,7 +147,7 @@ class Sales extends React.Component {
                                         <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
                                     </div>
                                 </div>
-                                <div className="col">
+                                <div className="col" style={{maxWidth:"50vw"}}>
                                     <div style={{height:"385px", maxHeight:"385px",position: "relative", maxWidth:"50vw"}}>
                                         <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%", maxWidth:"50vw"}}>
                                             <h1 className="listItemTitle" style={{color:"white", fontSize:"45px", maxWidth:"50vw"}} data-text={row.title}><b>{row.title}</b></h1>
@@ -155,7 +155,7 @@ class Sales extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-auto" >
+                                <div className="col-auto" style={{maxWidth:"25vw"}}>
                                     <div style={{height:"385px", maxHeight:"385px",position: "relative", maxWidth:"25vw"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
                                         <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%", maxWidth:"25vw"}}>
