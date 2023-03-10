@@ -141,7 +141,7 @@ class Sales extends React.Component {
                             <img className="listitembg"style={{ width: "inherit", height: "auto" }} src={src} alt="..." />
                         </div>
                         <div style={{ position: "absolute", zIndex: 1, width: "100%", top: 0}}>
-                            <div className="row align-middle">
+                            <div className="row align-middle" style={{maxWidth:"100vw"}}>
                                 <div className="col-auto" >
                                     <div className="container" style={{ padding: "10px", height: "385px", width:"auto"}}>
                                         <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
@@ -149,21 +149,21 @@ class Sales extends React.Component {
                                 </div>
                                 <div className="col">
                                     <div style={{height:"385px", maxHeight:"385px",position: "relative", maxWidth:"800px"}}>
-                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%"}}>
-                                            <h1 className="listItemTitle" style={{color:"white", fontSize:"45px"}} data-text={row.title}><b>{row.title}</b></h1>
-                                            <h3 className="listItemVendor" style={{fontSize:"30px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
+                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%", maxWidth:"800px"}}>
+                                            <h1 className="listItemTitle" style={{color:"white", fontSize:"45px", maxWidth:"800px"}} data-text={row.title}><b>{row.title}</b></h1>
+                                            <h3 className="listItemVendor" style={{fontSize:"30px", maxWidth:"800px", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-auto" >
-                                    <div style={{height:"385px", maxHeight:"385px",position: "relative", maxWidth:"800px"}}>
+                                    <div style={{height:"385px", maxHeight:"385px",position: "relative", maxWidth:"300px"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
-                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%", maxWidth:"300px"}}>
                                             <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
                                             <h3 style={{fontSize:"50px", color: "red", fontFamily: 'Karla' }}><del><em>${row.comparePrice}</em></del></h3>
                                         </div>
                                     ) : (
-                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"385px",position: "absolute",margin: 0, top: "50%", maxWidth:"300px"}}>
                                             <h1 style={{ color: "yellow" , maxHeight:"385px"}}><b>${row.price}</b></h1>
                                         </div>
                                     )
