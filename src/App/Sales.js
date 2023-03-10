@@ -147,23 +147,23 @@ class Sales extends React.Component {
                                         <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
                                     </div>
                                 </div>
-                                <div className="col" style={{maxWidth:"50vw", maxHeight:"325px"}}>
-                                    <div style={{height:"325px", maxHeight:"325px",position: "relative", maxWidth:"50vw"}}>
-                                        <div className="vertCenter" style={{ maxHeight:"325px",position: "absolute",margin: 0, top: "50%", maxWidth:"50vw"}}>
-                                            <h1 className="listItemTitle" style={{color:"white", fontSize:"45px", maxWidth:"50vw"}} data-text={row.title}><b>{row.title}</b></h1>
-                                            <h3 className="listItemVendor" style={{fontSize:"30px", maxWidth:"50vw", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
+                                <div className="col" style={{maxWidth:"45vw", maxHeight:"325px"}}>
+                                    <div style={{height:"325px", maxHeight:"325px",position: "relative", maxWidth:"45vw"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"325px",position: "absolute",margin: 0, top: "50%", maxWidth:"45vw"}}>
+                                            <h1 className="listItemTitle" style={{color:"white", fontSize:"45px", maxWidth:"45vw"}} data-text={row.title}><b>{row.title}</b></h1>
+                                            <h3 className="listItemVendor" style={{fontSize:"30px", maxWidth:"45vw", backgroundColor:"rgba(255,255,255,0.6)",color:"darkgreen"}}><b>{row.vendor}</b></h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-auto" style={{maxWidth:"25vw", maxHeight:"325px"}}>
-                                    <div style={{height:"325px", maxHeight:"325px",position: "relative", maxWidth:"25vw"}}>
+                                <div className="col-auto" style={{maxWidth:"25vw",width:"25vw", maxHeight:"325px"}}>
+                                    <div style={{height:"325px", maxHeight:"325px",position: "relative", maxWidth:"25vw",width:"25vw"}}>
                                     {row.comparePrice !== null && row.comparePrice !== "" ? (
-                                        <div className="vertCenter" style={{ maxHeight:"325px",position: "absolute",margin: 0, top: "50%", maxWidth:"25vw"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"325px",position: "absolute",margin: 0, top: "50%", maxWidth:"25vw",width:"25vw"}}>
                                             <h1 style={{fontSize:"100px", color: "yellow", fontFamily: 'Karla' }}><b>${row.price}</b></h1>
                                             <h3 style={{fontSize:"50px", color: "red", fontFamily: 'Karla' }}><del><em>${row.comparePrice}</em></del></h3>
                                         </div>
                                     ) : (
-                                        <div className="vertCenter" style={{ maxHeight:"325px",position: "absolute",margin: 0, top: "50%", maxWidth:"25vw"}}>
+                                        <div className="vertCenter" style={{ maxHeight:"325px",position: "absolute",margin: 0, top: "50%", maxWidth:"25vw",width:"25vw"}}>
                                             <h1 style={{ color: "yellow" , maxHeight:"325px"}}><b>${row.price}</b></h1>
                                         </div>
                                     )
@@ -229,7 +229,7 @@ class Sales extends React.Component {
 
             <table id="productsTable" className="table table-striped animate" style={{ position: "relative", animation: "example 130s", backgroundColor: "rgba(71,138,64,255)", width: "100%" }}>
                 <tbody>
-                    <tr colSpan="100%" key="-1" style={{ height: "25vw", padding:0 }}>
+                    <tr colSpan="100%" key="-1" style={{ height: "25vw",width:"45vw", padding:0 }}>
                         <td style={{ padding:0, margin:0 }}>
                             <div style={{ width: "100%", height:"100%", padding:0, margin:0}}>
                                 <img style={{ width: "100%", height: "auto" }} src={item1} alt="..." />
