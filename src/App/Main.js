@@ -171,7 +171,7 @@ class Main extends React.Component {
             }}
           >
             <strong>
-              <div className="row  bg-dark" style={{ color: "yellow" }}>
+              <div className="row  bg-dark" style={{ color: "yellow", position: "absolute", zIndex:10, width:"100vw" }}>
                 <div className="col">
                   <h2>Sunday</h2>
                 </div>
