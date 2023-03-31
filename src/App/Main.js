@@ -50,7 +50,40 @@ class Main extends React.Component {
         this.setState({ addOnSlide: res.data });
         setTimeout(() => {
           this.setState({ loading: false })
-
+          this.setState({ calanderComponent: <div
+            style={{
+              width: "100vw",
+              height: "100vh",
+              padding: 0
+            }}
+          >
+            <strong>
+              <div className="row  bg-dark" style={{ color: "yellow", position: "absolute", zIndex:10, width:"100vw" }}>
+                <div className="col">
+                  <h2>Sunday</h2>
+                </div>
+                <div className="col">
+                  <h2>Monday</h2>
+                </div>
+                <div className="col">
+                  <h2>Tuesday</h2>
+                </div>
+                <div className="col">
+                  <h2>Wednesday</h2>
+                </div>
+                <div className="col">
+                  <h2>Thursday</h2>
+                </div>
+                <div className="col">
+                  <h2>Friday</h2>
+                </div>
+                <div className="col">
+                  <h2>Saturday</h2>
+                </div>
+              </div>
+            </strong>
+            <Calander />;
+          </div> })
         }, 1);
       })
       .catch(err => {
@@ -108,7 +141,7 @@ class Main extends React.Component {
             }}
           >
             <strong>
-              <div className="row  bg-dark" style={{ color: "yellow" }}>
+              <div className="row  bg-dark" style={{ color: "yellow", position: "absolute", zIndex:10, width:"100vw" }}>
                 <div className="col">
                   <h2>Sunday</h2>
                 </div>
