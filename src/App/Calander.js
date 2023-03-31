@@ -894,16 +894,18 @@ class Calander extends React.Component {
   }
 
   playScroll() {
-    let el = document.getElementById("calander");
+    let el = document.getElementById("calanderTable");
 
     if (el) {
-      this.smooth_scroll_to(el, 1400, 50000);
+      this.setState({loading:false});
     }
   }
 
   resetScroll() {
-    let el = document.getElementById("calander");
-    if (el) el.scrollTop = 0;
+    let el = document.getElementById("calanderTable");
+    if (el) {
+      this.setState({loading:true});
+    }
   }
 
   //sort function for time slot
@@ -1065,6 +1067,7 @@ class Calander extends React.Component {
     interrupted
  */
   smooth_scroll_to(element, target, duration) {
+    /*
     target = Math.round(target);
     duration = Math.round(duration);
     if (duration < 0) {
@@ -1135,6 +1138,7 @@ class Calander extends React.Component {
       // boostrap the animation process
       setTimeout(scroll_frame, 0);
     });
+    */
   }
 
   setTableBody(table, weekday) {
@@ -1269,13 +1273,14 @@ class Calander extends React.Component {
           minWidth: "100vw",
           minHeight: "90vh",
           padding: 0,
-          overflowY: "auto"
+          backgroundColor:"darkgray",
+          zIndex:-1
         }}
       >
         <table
-          className="table align-middle table-bordered w-100"
+          className="table align-middle table-bordered w-100 calanderMove"
           id="calanderTable"
-          style={{ minWidth: "100vw", minHeight: "1500px" }}
+          style={{ minWidth: "100vw", minHeight: "1500px",position: "relative" }}
         >
           <tbody>
             {this.state.tableBody}

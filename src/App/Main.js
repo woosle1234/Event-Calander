@@ -32,6 +32,11 @@ class Main extends React.Component {
           <span className="visually-hidden">Loading...</span>
         </div>
       </div>,
+      calanderComponent: <div style={{ width: "100vw", height: "100vh" }}>
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>,
       addOnSlide: [],
       loading: true,
       timer: null
@@ -45,6 +50,7 @@ class Main extends React.Component {
         this.setState({ addOnSlide: res.data });
         setTimeout(() => {
           this.setState({ loading: false })
+
         }, 1);
       })
       .catch(err => {
@@ -91,9 +97,43 @@ class Main extends React.Component {
       timer=setTimeout(() => {
         
           let nextSlide = this.state.currentSlide + 1;
-          if (nextSlide > 7 + this.state.addOnSlide.length) 
+          if (nextSlide >= 7 + this.state.addOnSlide.length) 
             nextSlide = 0;
           this.setState({ currentSlide: nextSlide });
+          this.setState({ calanderComponent: <div
+            style={{
+              width: "100vw",
+              height: "100vh",
+              padding: 0
+            }}
+          >
+            <strong>
+              <div className="row  bg-dark" style={{ color: "yellow" }}>
+                <div className="col">
+                  <h2>Sunday</h2>
+                </div>
+                <div className="col">
+                  <h2>Monday</h2>
+                </div>
+                <div className="col">
+                  <h2>Tuesday</h2>
+                </div>
+                <div className="col">
+                  <h2>Wednesday</h2>
+                </div>
+                <div className="col">
+                  <h2>Thursday</h2>
+                </div>
+                <div className="col">
+                  <h2>Friday</h2>
+                </div>
+                <div className="col">
+                  <h2>Saturday</h2>
+                </div>
+              </div>
+            </strong>
+            <Calander />;
+          </div> })
         
       }, 10000)
       /*
@@ -115,8 +155,49 @@ class Main extends React.Component {
 
     switch (idx) {
       case 0:
-        window.calanderComponent.playScroll();
-
+        this.setState({
+          calanderComponent: <div style={{ width: "100vw", height: "100vh" }}>
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        })
+        setTimeout(() => {
+          this.setState({ calanderComponent: <div
+            style={{
+              width: "100vw",
+              height: "100vh",
+              padding: 0
+            }}
+          >
+            <strong>
+              <div className="row  bg-dark" style={{ color: "yellow" }}>
+                <div className="col">
+                  <h2>Sunday</h2>
+                </div>
+                <div className="col">
+                  <h2>Monday</h2>
+                </div>
+                <div className="col">
+                  <h2>Tuesday</h2>
+                </div>
+                <div className="col">
+                  <h2>Wednesday</h2>
+                </div>
+                <div className="col">
+                  <h2>Thursday</h2>
+                </div>
+                <div className="col">
+                  <h2>Friday</h2>
+                </div>
+                <div className="col">
+                  <h2>Saturday</h2>
+                </div>
+              </div>
+            </strong>
+            <Calander />;
+          </div> })
+        }, 1)
         this.loopSlide(idx);
         break;
       case 1:
@@ -124,7 +205,7 @@ class Main extends React.Component {
           yugiohText: window.calanderComponent.getYugiohEvents()
         });
         this.loopSlide(idx);
-        window.calanderComponent.resetScroll();
+        
         break;
       case 2:
         this.setState({
@@ -169,13 +250,11 @@ class Main extends React.Component {
         setTimeout(() => {
           this.setState({ salesComponent: <Sales /> })
         }, 1)
-
-        window.calanderComponent.resetScroll();
+        
         break;
       default:
         this.loopSlide(idx);
-
-        window.calanderComponent.resetScroll();
+        
         break;
     }
 
@@ -198,40 +277,7 @@ class Main extends React.Component {
         selectedItem={this.state.currentSlide}
         onChange={(idx, arg) => this.calanaderChange(idx)}
       >
-        <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            padding: 0
-          }}
-        >
-          <strong>
-            <div className="row  bg-dark" style={{ color: "yellow" }}>
-              <div className="col">
-                <h2>Sunday</h2>
-              </div>
-              <div className="col">
-                <h2>Monday</h2>
-              </div>
-              <div className="col">
-                <h2>Tuesday</h2>
-              </div>
-              <div className="col">
-                <h2>Wednesday</h2>
-              </div>
-              <div className="col">
-                <h2>Thursday</h2>
-              </div>
-              <div className="col">
-                <h2>Friday</h2>
-              </div>
-              <div className="col">
-                <h2>Saturday</h2>
-              </div>
-            </div>
-          </strong>
-          <Calander />;
-        </div>
+        {this.state.calanderComponent}
         <EventSlide divstyle={{
           width: "44vw",
           height: "46vh",

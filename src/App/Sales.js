@@ -130,8 +130,10 @@ class Sales extends React.Component {
     }
 
     getRow(row, key, clas) {
+
+        let game = row.game.replace(" Sealed Product","");
         
-        let src = this.state.images[row.game]!==undefined?this.state.images[row.game]:this.state.images["blanklogo"];
+        let src = this.state.images[game]!==undefined?this.state.images[game]:this.state.images["blanklogo"];
 
         return (
             <tr  key={key} style={{ padding: "10px", margin: 0, width: "100vw", maxWidth:"100vw" }}>
@@ -143,8 +145,8 @@ class Sales extends React.Component {
                         <div style={{ position: "absolute", zIndex: 1, width: "100%", top: 0}}>
                             <div className="row align-middle" style={{maxWidth:"100vw"}}>
                                 <div className="col-auto" >
-                                    <div className="container" style={{ padding: "10px", height: "325px", width:"auto"}}>
-                                        <img src={row.image} alt="..." style={{maxHeight:"295px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
+                                    <div className="container" style={{ padding: "10px", height: "275px", width:"auto"}}>
+                                        <img src={row.image} alt="..." style={{maxHeight:"275px", height:"100%", width:"auto", marginLeft:"40px", marginRight:"40px"}} />
                                     </div>
                                 </div>
                                 <div className="col" style={{maxWidth:"45vw", maxHeight:"325px"}}>

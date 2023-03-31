@@ -87,3 +87,14 @@ td strong {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+.calanderMove{
+  animation-name: "calanderAnimation";
+  animation-duration: 25s;
+  animation-fill-mode: none;
+}
+
+@keyframes calanderAnimation {
+  from {top:0px}
+  to {top:-425px}
+}
