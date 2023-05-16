@@ -865,6 +865,7 @@ class Calander extends React.Component {
         
         let eventDay = oth[i].date[x] !== undefined ? oth[i].date[x] : oth[i].date;
         eventDay = eventDay instanceof Date ? eventDay : eventDay[0]
+        eventDay = eventDay instanceof Date ? eventDay : new Date(eventDay)
         
 
         var start = new Date(today.getFullYear(), 0, 0);
