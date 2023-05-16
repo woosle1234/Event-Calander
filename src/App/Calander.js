@@ -88,12 +88,12 @@ class Calander extends React.Component {
             let time = [];
             for (let x = 0; x < data[i].variants.length; x++) {
               let title = data[i].variants[x].title.toUpperCase();
-              
+
               let timeStr = title.substring(
                 title.includes("PM")
                   ? title.indexOf("PM") - 6
                   : title.indexOf("AM") - 6,
-                  title.includes("PM")
+                title.includes("PM")
                   ? title.indexOf("PM") + 2
                   : title.indexOf("AM") + 2
               );
@@ -109,7 +109,7 @@ class Calander extends React.Component {
                   timeStr.slice(0, index) + ":00 " + timeStr.slice(index);
               }
               timeStr = timeStr.replaceAll("t", "");
-              
+
               time.push(timeStr.trim());
             }
 
@@ -289,24 +289,44 @@ class Calander extends React.Component {
 
               let firstIdx = 0;
               let secondIdx = 0;
-              if (editedBody.includes("PM")) {
-                firstIdx = editedBody.indexOf("PM") - 6;
-                secondIdx = editedBody.indexOf("PM") + 2;
-              } else if (editedBody.includes("AM")) {
-                firstIdx = editedBody.indexOf("AM") - 6;
-                secondIdx = editedBody.indexOf("AM") + 2;
-              } else if (editedBody.includes("p.m.")) {
+
+              if (editedBody.includes("p.m.")) {
                 firstIdx = editedBody.indexOf("p.m.") - 6;
                 secondIdx = editedBody.indexOf("p.m.") + 4;
               } else if (editedBody.includes("a.m.")) {
                 firstIdx = editedBody.indexOf("a.m.") - 6;
                 secondIdx = editedBody.indexOf("a.m.") + 4;
+              } else if (editedBody.includes("P.M.")) {
+                firstIdx = editedBody.indexOf("P.M.") - 6;
+                secondIdx = editedBody.indexOf("P.M.") + 4;
+              } else if (editedBody.includes("A.M.")) {
+                firstIdx = editedBody.indexOf("A.M.") - 6;
+                secondIdx = editedBody.indexOf("A.M.") + 4;
+              } else if (editedBody.includes("PM")) {
+                firstIdx = editedBody.indexOf("PM") - 6;
+                secondIdx = editedBody.indexOf("PM") + 2;
+              } else if (editedBody.includes("AM")) {
+                firstIdx = editedBody.indexOf("AM") - 6;
+                secondIdx = editedBody.indexOf("AM") + 2;
               }
+
               let slicedText = editedBody.slice(firstIdx, secondIdx);
               slicedText = slicedText
-                .replace("p.m.", "PM")
-                .replace("a.m.", "AM");
-              time.push(slicedText.trim());
+                .replace("p.m.", ".PM")
+                .replace("a.m.", ".AM")
+                .replace("P.M.", ".PM")
+                .replace("A.M.", ".AM")
+
+
+              if (slicedText.match(':').index === 0) {
+                slicedText = slicedText.slice(1)
+              }
+              slicedText = slicedText.trim()
+                .replace(" ", "")
+
+              slicedText = slicedText.replace(".", " ")
+
+              time.push(slicedText);
 
               oth[oth.length - 1].time = time;
             }
@@ -315,31 +335,13 @@ class Calander extends React.Component {
 
         this.setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun);
 
-        mon.sort(this.sortEvents);
-        tues.sort(this.sortEvents);
-        wed.sort(this.sortEvents);
-        thurs.sort(this.sortEvents);
-        fri.sort(this.sortEvents);
-        sat.sort(this.sortEvents);
-        sun.sort(this.sortEvents);
 
-        this.setState({
-          monday: mon,
-          tuesday: tues,
-          wednesday: wed,
-          thursday: thurs,
-          friday: fri,
-          saturday: sat,
-          sunday: sun,
-          other: oth
-        });
-        this.setCalander(oth, mon, tues, wed, thurs, fri, sat, sun);
       })
       .catch((err) => {
         this.setState({ loading: false });
         console.log("Cannot get data from 401 games" + err);
       });
-      
+
   }
 
   getYugiohEvents() {
@@ -788,13 +790,13 @@ class Calander extends React.Component {
 
   setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun) {
     let today = new Date(Date.now());
-    let diff1 = 0 - today.getDay();
-    let diff2 = 7 - today.getDay();
+
 
     for (let i = 0; i < oth.length; i++) {
-      let dates = [];
+
       if (oth[i].date === undefined) oth[i].date = [];
       for (let x = 0; x < oth[i].variants.length; x++) {
+        let dates = [];
         if (oth[i].variants.length > 1) {
           let splitTitle = oth[i].variants[x].title.split(" ");
           if (splitTitle.length > 3) {
@@ -808,6 +810,7 @@ class Calander extends React.Component {
             newParseTitle.push(today.getFullYear());
             let date = new Date(Date.parse(newParseTitle));
             dates.push(date);
+
           } else {
             splitTitle[1] = splitTitle[1]
               .replace("th", "")
@@ -826,33 +829,53 @@ class Calander extends React.Component {
         } else {
           let splitTitle = oth[i].title.split(" - ");
 
-          splitTitle = splitTitle.find((element) => element.includes("2022"));
-          if (splitTitle === undefined) {
-          } else {
-            splitTitle = splitTitle.replace(",", "").split(" ");
+          splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
+
+          splitTitle = splitTitle.replace(",", "").split(" ");
+          if (splitTitle.length >= 4) {
             splitTitle[2] = splitTitle[2]
               .replace("th", "")
               .replace("rd", "")
               .replace("nd", "")
               .replace("st", "");
+          } else {
+            splitTitle[1] = splitTitle[1]
+              .replace("th", "")
+              .replace("rd", "")
+              .replace("nd", "")
+              .replace("st", "");
           }
+
+
           let newDate = new Date(Date.parse(splitTitle));
           dates.push(newDate);
         }
+        oth[i].date = dates
       }
 
-      oth[i].date = dates;
+
 
       for (let x = 0; x < oth[i].variants.length; x++) {
-        const diffTime = oth[i].date[x] - today;
+        const diffTime = Math.abs(oth[i].date[x] - today)
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         let event = oth[i];
+        let eventDay = oth[i].date[x] !== undefined ? oth[i].date[x] : oth[i].date;
 
-        let eventDay =
-          oth[i].date[x] !== undefined ? oth[i].date[x] : oth[i].date;
-        if (diffDays >= diff1 && diffDays <= diff2) {
+
+        var start = new Date(today.getFullYear(), 0, 0);
+        var difftoday = (today - start) + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
+        var oneDay = 1000 * 60 * 60 * 24;
+        var todayyearday = Math.floor(difftoday / oneDay);
+
+        var diffevent = (eventDay - start) + ((start.getTimezoneOffset() - eventDay.getTimezoneOffset()) * 60 * 1000);
+        var eventyearday = Math.floor(diffevent / oneDay);
+
+
+        if (diffDays <= 7 && ((eventyearday >= todayyearday && eventDay.getDay() >= today.getDay()) || (eventyearday < todayyearday && eventDay.getDay() < today.getDay()))) {
+
           event.time =
             typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
+
           event.date = eventDay;
           if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
             switch (eventDay.getDay()) {
@@ -883,6 +906,27 @@ class Calander extends React.Component {
         }
       }
     }
+
+    
+    mon.sort(this.sortEvents);
+    tues.sort(this.sortEvents);
+    wed.sort(this.sortEvents);
+    thurs.sort(this.sortEvents);
+    fri.sort(this.sortEvents);
+    sat.sort(this.sortEvents);
+    sun.sort(this.sortEvents);
+
+    this.setState({
+      monday: mon,
+      tuesday: tues,
+      wednesday: wed,
+      thursday: thurs,
+      friday: fri,
+      saturday: sat,
+      sunday: sun,
+      other: oth
+    });
+    this.setCalander(oth, mon, tues, wed, thurs, fri, sat, sun);
   }
 
   setDate(table) {
@@ -897,14 +941,14 @@ class Calander extends React.Component {
     let el = document.getElementById("calanderTable");
 
     if (el) {
-      this.setState({loading:false});
+      this.setState({ loading: false });
     }
   }
 
   resetScroll() {
     let el = document.getElementById("calanderTable");
     if (el) {
-      this.setState({loading:true});
+      this.setState({ loading: true });
     }
   }
 
@@ -929,30 +973,7 @@ class Calander extends React.Component {
       .replaceAll("</span>", "")
       .replaceAll("<strong>", "")
       .replaceAll("</strong>", "");
-    editedBodyText = editedBodyText.toUpperCase();
-    if (editedBodyText.includes("PM") || editedBodyText.includes("AM")) {
-      let first = editedBodyText.includes("PM")
-        ? editedBodyText.indexOf("PM") - 6
-        : editedBodyText.indexOf("AM") - 6;
-      let last = editedBodyText.includes("PM")
-        ? editedBodyText.indexOf("PM") + 2
-        : editedBodyText.indexOf("AM") + 2;
-      time = editedBodyText.substring(first, last);
-      time = time.substring(time.indexOf(time.match(/[0-9]+/))).trim();
-
-      if (!time.includes(":")) {
-        let index = time.includes("PM")
-          ? time.indexOf("PM")
-          : time.indexOf("AM");
-        time = time.slice(0, index).trim() + ": " + time.slice(index).trim();
-      }
-      if (!time.includes(" ")) {
-        let index = time.includes("PM")
-          ? time.indexOf("PM")
-          : time.indexOf("AM");
-        time = time.slice(0, index).trim() + " " + time.slice(index).trim();
-      }
-    } else if (
+    if (
       editedBodyText.includes("p.m") ||
       editedBodyText.includes("a.m")
     ) {
@@ -984,13 +1005,61 @@ class Calander extends React.Component {
       } else {
         time = time.replace("a.m", "AM");
       }
+    } else if (editedBodyText.includes("P.M.") || editedBodyText.includes("A.M.")) {
+      let first = editedBodyText.includes("P.M.")
+        ? editedBodyText.indexOf("P.M.") - 6
+        : editedBodyText.indexOf("A.M.") - 6;
+      let last = editedBodyText.includes("P.M.")
+        ? editedBodyText.indexOf("P.M.") + 3
+        : editedBodyText.indexOf("A.M.") + 3;
+      time = editedBodyText.substring(first, last);
+      time = time.substring(time.indexOf(time.match(/[0-9]+/))).trim();
+
+      if (!time.includes(":")) {
+        let index = time.includes("P.M.")
+          ? time.indexOf("P.M.")
+          : time.indexOf("A.M.");
+        time = time.slice(0, index).trim() + ": " + time.slice(index).trim();
+      }
+      if (!time.includes(" ")) {
+        let index = time.includes("P.M.")
+          ? time.indexOf("P.M.")
+          : time.indexOf("A.M.");
+        time = time.slice(0, index).trim() + " " + time.slice(index).trim();
+      }
+    } else if (editedBodyText.includes("PM") || editedBodyText.includes("AM")) {
+      let first = editedBodyText.includes("PM")
+        ? editedBodyText.indexOf("PM") - 6
+        : editedBodyText.indexOf("AM") - 6;
+      let last = editedBodyText.includes("PM")
+        ? editedBodyText.indexOf("PM") + 2
+        : editedBodyText.indexOf("AM") + 2;
+      time = editedBodyText.substring(first, last);
+      time = time.substring(time.indexOf(time.match(/[0-9]+/))).trim();
+
+      if (!time.includes(":")) {
+        let index = time.includes("PM")
+          ? time.indexOf("PM")
+          : time.indexOf("AM");
+        time = time.slice(0, index).trim() + ": " + time.slice(index).trim();
+      }
+      if (!time.includes(" ")) {
+        let index = time.includes("PM")
+          ? time.indexOf("PM")
+          : time.indexOf("AM");
+        time = time.slice(0, index).trim() + " " + time.slice(index).trim();
+      }
     } else {
       time = "N/A";
     }
+
+    time = time.replace(".", "")
+
     return time;
   }
 
   setCalander(oth, mon, tues, wed, thurs, fri, sat, sun) {
+    console.log(wed)
     let table = [];
     for (let i = 0; i < 30; i++) {
       let line = [];
@@ -1142,122 +1211,122 @@ class Calander extends React.Component {
   }
 
   setTableBody(table, weekday) {
-    let tb=[]
-    for(let idx=0;idx<table.length;idx++){
+    let tb = []
+    for (let idx = 0; idx < table.length; idx++) {
       tb.push(<tr
-      key={idx}
-      style={{ maxWidth: "100vw" }}
-      className="table-dark"
-    >
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "sunday " + (weekday === 0 ? "bg-primary" : "")
-        }
+        key={idx}
+        style={{ maxWidth: "100vw" }}
+        className="table-dark"
       >
-        <strong>{table[idx].sunday ? table[idx].sunday.title : ""}</strong>{" "}
-        <br />
-        <h4 className="text-warning">
-          <strong>{table[idx].sunday ? table[idx].sunday.time : ""}</strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].sunday)}
-      </td>
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "monday " + (weekday === 1 ? "bg-primary" : "")
-        }
-      >
-        <strong>{table[idx].monday ? table[idx].monday.title : ""}</strong>{" "}
-        <br />
-        <h4 className="text-warning">
-          <strong>{table[idx].monday ? table[idx].monday.time : ""}</strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].monday)}
-      </td>
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "tuesday " +
-          (weekday === 2 ? "bg-primary" : "")
-        }
-      >
-        <strong>{table[idx].tuesday ? table[idx].tuesday.title : ""}</strong>{" "}
-        <br />
-        <h4 className="text-warning">
-          <strong>{table[idx].tuesday ? table[idx].tuesday.time : ""}</strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].tuesday)}
-      </td>
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "wednesday " +
-          (weekday === 3 ? "bg-primary" : "")
-        }
-      >
-        <strong>
-          {table[idx].wednesday ? table[idx].wednesday.title : ""}
-        </strong>{" "}
-        <br />
-        <h4 className="text-warning">
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "sunday " + (weekday === 0 ? "bg-primary" : "")
+          }
+        >
+          <strong>{table[idx].sunday ? table[idx].sunday.title : ""}</strong>{" "}
+          <br />
+          <h4 className="text-warning">
+            <strong>{table[idx].sunday ? table[idx].sunday.time : ""}</strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].sunday)}
+        </td>
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "monday " + (weekday === 1 ? "bg-primary" : "")
+          }
+        >
+          <strong>{table[idx].monday ? table[idx].monday.title : ""}</strong>{" "}
+          <br />
+          <h4 className="text-warning">
+            <strong>{table[idx].monday ? table[idx].monday.time : ""}</strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].monday)}
+        </td>
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "tuesday " +
+            (weekday === 2 ? "bg-primary" : "")
+          }
+        >
+          <strong>{table[idx].tuesday ? table[idx].tuesday.title : ""}</strong>{" "}
+          <br />
+          <h4 className="text-warning">
+            <strong>{table[idx].tuesday ? table[idx].tuesday.time : ""}</strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].tuesday)}
+        </td>
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "wednesday " +
+            (weekday === 3 ? "bg-primary" : "")
+          }
+        >
           <strong>
-            {table[idx].wednesday ? table[idx].wednesday.time : ""}
-          </strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].wednesday)}
-      </td>
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "thursday " +
-          (weekday === 4 ? "bg-primary" : "")
-        }
-      >
-        <strong>{table[idx].thursday ? table[idx].thursday.title : ""}</strong>
-        <br />
-        <h4 className="text-warning">
-          <strong>{table[idx].thursday ? table[idx].thursday.time : ""}</strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].thursday)}
-      </td>
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "friday " + (weekday === 5 ? "bg-primary" : "")
-        }
-      >
-        <strong>{table[idx].friday ? table[idx].friday.title : ""}</strong>
-        <br />
-        <h4 className="text-warning">
-          <strong>{table[idx].friday ? table[idx].friday.time : ""}</strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].friday)}
-      </td>
-      <td
-        style={{ maxWidth: "15vw" }}
-        className={
-          "saturday " +
-          (weekday === 6 ? "bg-primary" : "")
-        }
-      >
-        <strong>{table[idx].saturday ? table[idx].saturday.title : ""}</strong>
-        <br />
-        <h4 className="text-warning">
-          <strong>{table[idx].saturday ? table[idx].saturday.time : ""}</strong>
-        </h4>
-        <br />
-        {this.setImage(table[idx].saturday)}
-      </td>
-    </tr>)
+            {table[idx].wednesday ? table[idx].wednesday.title : ""}
+          </strong>{" "}
+          <br />
+          <h4 className="text-warning">
+            <strong>
+              {table[idx].wednesday ? table[idx].wednesday.time : ""}
+            </strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].wednesday)}
+        </td>
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "thursday " +
+            (weekday === 4 ? "bg-primary" : "")
+          }
+        >
+          <strong>{table[idx].thursday ? table[idx].thursday.title : ""}</strong>
+          <br />
+          <h4 className="text-warning">
+            <strong>{table[idx].thursday ? table[idx].thursday.time : ""}</strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].thursday)}
+        </td>
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "friday " + (weekday === 5 ? "bg-primary" : "")
+          }
+        >
+          <strong>{table[idx].friday ? table[idx].friday.title : ""}</strong>
+          <br />
+          <h4 className="text-warning">
+            <strong>{table[idx].friday ? table[idx].friday.time : ""}</strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].friday)}
+        </td>
+        <td
+          style={{ maxWidth: "15vw" }}
+          className={
+            "saturday " +
+            (weekday === 6 ? "bg-primary" : "")
+          }
+        >
+          <strong>{table[idx].saturday ? table[idx].saturday.title : ""}</strong>
+          <br />
+          <h4 className="text-warning">
+            <strong>{table[idx].saturday ? table[idx].saturday.time : ""}</strong>
+          </h4>
+          <br />
+          {this.setImage(table[idx].saturday)}
+        </td>
+      </tr>)
     }
-    
+
     this.setState({ tableBody: tb });
     this.setState({ loading: tb === [] });
   }
@@ -1273,14 +1342,14 @@ class Calander extends React.Component {
           minWidth: "100vw",
           minHeight: "90vh",
           padding: 0,
-          backgroundColor:"darkgray",
-          zIndex:-1
+          backgroundColor: "darkgray",
+          zIndex: -1
         }}
       >
         <table
           className="table align-middle table-bordered w-100 calanderMove"
           id="calanderTable"
-          style={{ minWidth: "100vw", minHeight: "1500px",position: "relative" }}
+          style={{ minWidth: "100vw", minHeight: "1500px", position: "relative" }}
         >
           <tbody>
             {this.state.tableBody}

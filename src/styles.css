@@ -92,6 +92,7 @@ td strong {
   animation-name: "calanderAnimation";
   animation-duration: 25s;
   animation-fill-mode: none;
+  animation-delay: 5s;
 }
 
 @keyframes calanderAnimation {
