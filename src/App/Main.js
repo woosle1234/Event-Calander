@@ -168,7 +168,7 @@ class Main extends React.Component {
             <Calander />;
           </div> })
         
-      }, 10000)
+      }, 15000)
       /*
       setTimeout(() => {
         if (this.state.currentSlide === curr) {
