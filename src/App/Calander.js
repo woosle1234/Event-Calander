@@ -910,6 +910,7 @@ class Calander extends React.Component {
             typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
 
           event.date = eventDay;
+          
 
 
           if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
