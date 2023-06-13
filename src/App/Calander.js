@@ -73,6 +73,7 @@ class Calander extends React.Component {
       )
       .then((res) => {
         let data = res.data.products;
+
         let mon, tues, wed, thurs, fri, sat, sun, oth;
         mon = [];
         tues = [];
@@ -83,6 +84,7 @@ class Calander extends React.Component {
         sun = [];
         oth = [];
         for (let i = 0; i < data.length; i++) {
+
           if (data[i].variants.length > 1) {
             oth.push(data[i]);
             let time = [];
@@ -115,13 +117,11 @@ class Calander extends React.Component {
 
             oth[oth.length - 1].time = time;
           } else {
+
             let day = data[i].tags.find((element) =>
               element.includes("Events By Day_")
             );
-            if (
-              day !== undefined &&
-              data[i].tags.find((element) => element === "Weekly") !== undefined
-            ) {
+            if (day !== undefined && data[i].tags.find((element) => element === "Weekly") !== undefined) {
               day = day.replace("Events By Day_", "");
               switch (day) {
                 case "Monday":
@@ -272,11 +272,11 @@ class Calander extends React.Component {
               }
             } else {
               //Set the times for other events
+
+
               oth.push(data[i]);
-              oth[oth.length - 1].title = oth[oth.length - 1].title.replace(
-                "Vaughan Events - ",
-                ""
-              );
+
+              oth[oth.length - 1].title = oth[oth.length - 1].title.replace("Vaughan Events - ", "");
 
               let time = [];
               let editedBody = data[i].body_html
@@ -286,6 +286,7 @@ class Calander extends React.Component {
                 .replaceAll("</span>", "")
                 .replaceAll("<strong>", "")
                 .replaceAll("</strong>", "");
+
 
               let firstIdx = 0;
               let secondIdx = 0;
@@ -312,23 +313,23 @@ class Calander extends React.Component {
 
               let slicedText = editedBody.slice(firstIdx, secondIdx);
               slicedText = slicedText
-                .replace("p.m.", ".PM")
-                .replace("a.m.", ".AM")
-                .replace("P.M.", ".PM")
-                .replace("A.M.", ".AM")
+                .replace("p.m.", "PM")
+                .replace("a.m.", "AM")
+                .replace("P.M.", "PM")
+                .replace("A.M.", "AM")
 
 
               if (slicedText.match(':').index === 0) {
                 slicedText = slicedText.slice(1)
               }
               slicedText = slicedText.trim()
-                .replace(" ", "")
 
-              slicedText = slicedText.replace(".", " ")
+              slicedText = slicedText.replaceAll(".", "")
 
               time.push(slicedText);
 
               oth[oth.length - 1].time = time;
+
             }
           }
         }
@@ -339,7 +340,7 @@ class Calander extends React.Component {
       })
       .catch((err) => {
         this.setState({ loading: false });
-        console.log("Cannot get data from 401 games" + err);
+        console.log("Cannot get data from 401 games " + err);
       });
 
   }
@@ -829,27 +830,53 @@ class Calander extends React.Component {
             }
           } else {
             let splitTitle = oth[i].title.split(" - ");
-
             splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
+            if (splitTitle !== undefined) {
 
-            splitTitle = splitTitle.replace(",", "").split(" ");
-            if (splitTitle.length >= 4) {
-              splitTitle[2] = splitTitle[2]
-                .replace("th", "")
-                .replace("rd", "")
-                .replace("nd", "")
-                .replace("st", "");
+
+              splitTitle = splitTitle.replace(",", "").split(" ");
+              if (splitTitle.length >= 4) {
+                splitTitle[2] = splitTitle[2]
+                  .replace("th", "")
+                  .replace("rd", "")
+                  .replace("nd", "")
+                  .replace("st", "");
+              } else {
+                splitTitle[1] = splitTitle[1]
+                  .replace("th", "")
+                  .replace("rd", "")
+                  .replace("nd", "")
+                  .replace("st", "");
+              }
+
+
+              let newDate = new Date(Date.parse(splitTitle));
+              dates.push(newDate);
             } else {
+              splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
+              
+              splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
+              splitTitle = splitTitle.replace(",", "").split(" ");
               splitTitle[1] = splitTitle[1]
-                .replace("th", "")
-                .replace("rd", "")
-                .replace("nd", "")
-                .replace("st", "");
+                .replace("TH", "")
+                .replace("RD", "")
+                .replace("ND", "")
+                .replace("ST", "")
+              splitTitle[2] = splitTitle[2]
+                .replace("TH", "")
+                .replace("RD", "")
+                .replace("ND", "")
+                .replace("ST", "")
+              if (splitTitle.length >= 4) {
+                splitTitle[3] = splitTitle[3]
+                  .replace("th", "")
+                  .replace("rd", "")
+                  .replace("nd", "")
+                  .replace("st", "");
+              } 
+              let newDate = new Date(Date.parse(splitTitle));
+              dates.push(newDate);
             }
-
-
-            let newDate = new Date(Date.parse(splitTitle));
-            dates.push(newDate);
           }
           oth[i].date = dates
         }
@@ -862,11 +889,11 @@ class Calander extends React.Component {
         const diffTime = Math.abs(oth[i].date[x] - today)
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         let event = oth[i];
-        
+
         let eventDay = oth[i].date[x] !== undefined ? oth[i].date[x] : oth[i].date;
         eventDay = eventDay instanceof Date ? eventDay : eventDay[0]
         eventDay = eventDay instanceof Date ? eventDay : new Date(eventDay)
-        
+
 
         var start = new Date(today.getFullYear(), 0, 0);
         var difftoday = (today - start) + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
@@ -875,16 +902,16 @@ class Calander extends React.Component {
 
         var diffevent = (eventDay - start) + ((start.getTimezoneOffset() - eventDay.getTimezoneOffset()) * 60 * 1000);
         var eventyearday = Math.floor(diffevent / oneDay);
-        
 
-        if (diffDays <= 7 && ((eventyearday >= todayyearday && eventDay.getDay() >= today.getDay()) || (eventyearday < todayyearday && eventDay.getDay() < today.getDay()))) {
+
+        if (diffDays <= 6 && ((eventyearday >= todayyearday && eventDay.getDay() >= today.getDay()) || (eventyearday < todayyearday && eventDay.getDay() < today.getDay()))) {
 
           event.time =
             typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
 
           event.date = eventDay;
 
-          
+
           if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
             switch (eventDay.getDay()) {
               case 0:
@@ -1067,7 +1094,7 @@ class Calander extends React.Component {
   }
 
   setCalander(oth, mon, tues, wed, thurs, fri, sat, sun) {
-    
+
     let table = [];
     for (let i = 0; i < 30; i++) {
       let line = [];
