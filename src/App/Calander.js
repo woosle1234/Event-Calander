@@ -13,6 +13,8 @@ import weiss from "../Asset/weiss.png";
 import pokemon from "../Asset/pokemon.png";
 import blank from "../Asset/401gameslogo.png";
 
+const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
 class Calander extends React.Component {
   constructor(props) {
     super(props);
@@ -830,10 +832,10 @@ class Calander extends React.Component {
             }
           } else {
             let splitTitle = oth[i].title.split(" - ");
+            console.log(splitTitle)
             splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
+            
             if (splitTitle !== undefined) {
-
-
               splitTitle = splitTitle.replace(",", "").split(" ");
               if (splitTitle.length >= 4) {
                 splitTitle[2] = splitTitle[2]
@@ -852,9 +854,29 @@ class Calander extends React.Component {
 
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
-            } else {
+            } else if( oth[i].title.split(" - ").find((element) => weekdays.find(el=>element.includes(el)))) {
+              splitTitle =  oth[i].title.split(" - ").find((element) => weekdays.find(el=>element.includes(el)))
+              splitTitle = splitTitle.replace(",", "").split(" ");
+              if (splitTitle.length >= 4) {
+                splitTitle[2] = splitTitle[2]
+                  .replace("th", "")
+                  .replace("rd", "")
+                  .replace("nd", "")
+                  .replace("st", "");
+              } else {
+                splitTitle[1] = splitTitle[1]
+                  .replace("th", "")
+                  .replace("rd", "")
+                  .replace("nd", "")
+                  .replace("st", "");
+              }
+
+
+              let newDate = new Date(Date.parse(splitTitle));
+              dates.push(newDate);
+            }else if (oth[i].variants[0].title !== "DEFAULT TITLE") {
               splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
-              
+              console.log(splitTitle)
               splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
               splitTitle = splitTitle.replace(",", "").split(" ");
               splitTitle[1] = splitTitle[1]
@@ -876,6 +898,8 @@ class Calander extends React.Component {
               } 
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
+            }else{
+              console.log(oth[i].title)
             }
           }
           oth[i].date = dates

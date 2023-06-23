@@ -90,8 +90,8 @@ td strong {
 
 .calanderMove{
   animation-name: "calanderAnimation";
-  animation-duration: 25s;
-  animation-fill-mode: none;
+  animation-duration: 20s;
+  animation-fill-mode: forwards;
   animation-delay: 5s;
 }
 
