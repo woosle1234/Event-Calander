@@ -86,7 +86,7 @@ class Calander extends React.Component {
         sun = [];
         oth = [];
         for (let i = 0; i < data.length; i++) {
-
+          console.log(data[i].title)
           if (data[i].variants.length > 1) {
             oth.push(data[i]);
             let time = [];
