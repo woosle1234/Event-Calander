@@ -832,7 +832,6 @@ class Calander extends React.Component {
             }
           } else {
             let splitTitle = oth[i].title.split(" - ");
-            console.log(splitTitle)
             splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
             
             if (splitTitle !== undefined) {
@@ -876,7 +875,6 @@ class Calander extends React.Component {
               dates.push(newDate);
             }else if (oth[i].variants[0].title !== "DEFAULT TITLE") {
               splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
-              console.log(splitTitle)
               splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
               splitTitle = splitTitle.replace(",", "").split(" ");
               splitTitle[1] = splitTitle[1]

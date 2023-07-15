@@ -94,7 +94,6 @@ class Main extends React.Component {
   loopSlide(idx) {
 
     let curr = idx;
-    this.setState({ currentSlide: idx });
 
     if(timer !== null)
       clearTimeout(timer);
@@ -130,7 +129,7 @@ class Main extends React.Component {
       timer=setTimeout(() => {
         
           let nextSlide = this.state.currentSlide + 1;
-          if (nextSlide >= 7 + this.state.addOnSlide.length) 
+          if (nextSlide > 7 + this.state.addOnSlide.length) 
             nextSlide = 0;
           this.setState({ currentSlide: nextSlide });
           this.setState({ calanderComponent: <div
@@ -185,7 +184,7 @@ class Main extends React.Component {
 
   calanaderChange(idx) {
     this.setState({ currentSlide: idx });
-
+    
     switch (idx) {
       case 0:
         this.setState({
@@ -272,6 +271,7 @@ class Main extends React.Component {
 
         break;
       case 7:
+        
         this.loopSlide(idx);
         this.setState({
           salesComponent: <div style={{ width: "100vw", height: "100vh" }}>
