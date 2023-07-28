@@ -319,8 +319,8 @@ class Calander extends React.Component {
                 .replace("a.m.", "AM")
                 .replace("P.M.", "PM")
                 .replace("A.M.", "AM")
-
-
+              
+              
               if (slicedText.match(':').index === 0) {
                 slicedText = slicedText.slice(1)
               }
@@ -340,10 +340,10 @@ class Calander extends React.Component {
 
 
       })
-      .catch((err) => {
-        this.setState({ loading: false });
-        console.log("Cannot get data from 401 games " + err);
-      });
+      // .catch((err) => {
+      //   this.setState({ loading: false });
+      //   console.log("Cannot get data from 401 games " + err);
+      // });
 
   }
 
@@ -873,20 +873,23 @@ class Calander extends React.Component {
 
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
-            }else if (oth[i].variants[0].title !== "DEFAULT TITLE") {
+            }else if (oth[i].variants[0].title !== "DEFAULT TITLE" && oth[i].variants[0].title !== "Default Title") {
               splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
+              console.log(oth[i].variants[0].title)
               splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
+              
               splitTitle = splitTitle.replace(",", "").split(" ");
+              
               splitTitle[1] = splitTitle[1]
                 .replace("TH", "")
                 .replace("RD", "")
                 .replace("ND", "")
-                .replace("ST", "")
+                .replace("ST", "");
               splitTitle[2] = splitTitle[2]
                 .replace("TH", "")
                 .replace("RD", "")
                 .replace("ND", "")
-                .replace("ST", "")
+                .replace("ST", "");
               if (splitTitle.length >= 4) {
                 splitTitle[3] = splitTitle[3]
                   .replace("th", "")
@@ -897,7 +900,34 @@ class Calander extends React.Component {
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
             }else{
-              console.log(oth[i].title)
+              //get the date keyword from the html body then retrieve the date
+              let firstIdx = oth[i].body_html.indexOf("<strong>Date:</strong></span>")
+              let editedbody = oth[i].body_html.slice(firstIdx+30)
+              editedbody = editedbody.slice(0,editedbody.indexOf("</p>"))
+              editedbody = editedbody.toUpperCase()
+              editedbody = editedbody.replace(",", "").split(" ");
+              
+              editedbody[1] = editedbody[1]
+                .replace("TH", "")
+                .replace("RD", "")
+                .replace("ND", "")
+                .replace("ST", "");
+                editedbody[2] = editedbody[2]
+                .replace("TH", "")
+                .replace("RD", "")
+                .replace("ND", "")
+                .replace("ST", "");
+              if (editedbody.length >= 4) {
+                editedbody[3] = editedbody[3]
+                  .replace("th", "")
+                  .replace("rd", "")
+                  .replace("nd", "")
+                  .replace("st", "");
+              } 
+
+              let newDate = new Date(Date.parse(editedbody));
+              dates.push(newDate);
+              console.log(newDate)
             }
           }
           oth[i].date = dates
