@@ -55,7 +55,8 @@ class Calander extends React.Component {
         "Shadowverse Evolve",
         "Shadowverse",
         "FNM",
-        "Draft"
+        "Draft",
+        "YU-GI-OH!"
       ],
       images: {
         MTG: magic,
