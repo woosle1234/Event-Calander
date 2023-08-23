@@ -12,6 +12,8 @@ import vanguard from "../Asset/vanguard.png";
 import weiss from "../Asset/weiss.png";
 import pokemon from "../Asset/pokemon.png";
 import blank from "../Asset/401gameslogo.png";
+import lorcana from "../Asset/lorcana.png"
+import sve from "../Asset/SVElogo.png"
 
 const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -46,7 +48,14 @@ class Calander extends React.Component {
         "Metazoo",
         "Vanguard",
         "Magic: The Gathering",
-        "MetaZoo"
+        "MetaZoo",
+        "Disney Lorcana",
+        "LORCANA",
+        "Shadowverse: Evolve",
+        "Shadowverse Evolve",
+        "Shadowverse",
+        "FNM",
+        "Draft"
       ],
       images: {
         MTG: magic,
@@ -62,7 +71,12 @@ class Calander extends React.Component {
         Vanguard: vanguard,
         "Magic: The Gathering": magic,
         MetaZoo: metazoo,
-        blanklogo: blank
+        blanklogo: blank,
+        "Disney Lorcana":lorcana,
+        LORCANA:lorcana,
+        "Shadowverse: Evolve": sve,
+        "Shadowverse Evolve": sve,
+        "Shadowverse": sve
       }
     };
   }
@@ -125,6 +139,7 @@ class Calander extends React.Component {
             );
             if (day !== undefined && data[i].tags.find((element) => element === "Weekly") !== undefined) {
               day = day.replace("Events By Day_", "");
+              let temptitles = []
               switch (day) {
                 case "Monday":
                   mon.push(data[i]);
@@ -133,15 +148,19 @@ class Calander extends React.Component {
                     "Vaughan Events - ",
                     ""
                   );
-                  mon[mon.length - 1].title = mon[
-                    mon.length - 1
-                  ].title.substring(
-                    mon[mon.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        mon[mon.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+                  temptitles =  mon[mon.length - 1].title.split(" - ")
+                  mon[mon.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // mon[mon.length - 1].title = mon[
+                  //   mon.length - 1
+                  // ].title.substring(
+                  //   mon[mon.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       mon[mon.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
+
                   break;
                 case "Tuesday":
                   tues.push(data[i]);
@@ -149,15 +168,19 @@ class Calander extends React.Component {
                   tues[tues.length - 1].title = tues[
                     tues.length - 1
                   ].title.replace("Vaughan Events - ", "");
-                  tues[tues.length - 1].title = tues[
-                    tues.length - 1
-                  ].title.substring(
-                    tues[tues.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        tues[tues.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+
+                  temptitles =  tues[tues.length - 1].title.split(" - ")
+                  tues[tues.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // tues[tues.length - 1].title = tues[
+                  //   tues.length - 1
+                  // ].title.substring(
+                  //   tues[tues.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       tues[tues.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
                   break;
                 case "Wednesday":
                   wed.push(data[i]);
@@ -166,15 +189,20 @@ class Calander extends React.Component {
                     "Vaughan Events - ",
                     ""
                   );
-                  wed[wed.length - 1].title = wed[
-                    wed.length - 1
-                  ].title.substring(
-                    wed[wed.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        wed[wed.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+                  
+                  temptitles =  wed[wed.length - 1].title.split(" - ")
+                  wed[wed.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // wed[wed.length - 1].title = wed[
+                  //   wed.length - 1
+                  // ].title.substring(
+                  //   wed[wed.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       wed[wed.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
+                  
                   break;
                 case "Thursday":
                   thurs.push(data[i]);
@@ -182,15 +210,19 @@ class Calander extends React.Component {
                   thurs[thurs.length - 1].title = thurs[
                     thurs.length - 1
                   ].title.replace("Vaughan Events - ", "");
-                  thurs[thurs.length - 1].title = thurs[
-                    thurs.length - 1
-                  ].title.substring(
-                    thurs[thurs.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        thurs[thurs.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+
+                  temptitles =  thurs[thurs.length - 1].title.split(" - ")
+                  thurs[thurs.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // thurs[thurs.length - 1].title = thurs[
+                  //   thurs.length - 1
+                  // ].title.substring(
+                  //   thurs[thurs.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       thurs[thurs.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
                   break;
                 case "Friday":
                   fri.push(data[i]);
@@ -199,15 +231,20 @@ class Calander extends React.Component {
                     "Vaughan Events - ",
                     ""
                   );
-                  fri[fri.length - 1].title = fri[
-                    fri.length - 1
-                  ].title.substring(
-                    fri[fri.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        fri[fri.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+
+                  temptitles =  fri[fri.length - 1].title.split(" - ")
+                  fri[fri.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // fri[fri.length - 1].title = fri[
+                  //   fri.length - 1
+                  // ].title.substring(
+                  //   fri[fri.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       fri[fri.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
+                  
                   break;
                 case "Saturday":
                   sat.push(data[i]);
@@ -216,15 +253,19 @@ class Calander extends React.Component {
                     "Vaughan Events - ",
                     ""
                   );
-                  sat[sat.length - 1].title = sat[
-                    sat.length - 1
-                  ].title.substring(
-                    sat[sat.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        sat[sat.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+
+                  temptitles =  sat[sat.length - 1].title.split(" - ")
+                  sat[sat.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // sat[sat.length - 1].title = sat[
+                  //   sat.length - 1
+                  // ].title.substring(
+                  //   sat[sat.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       sat[sat.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
                   break;
                 case "Sunday":
                   sun.push(data[i]);
@@ -233,15 +274,19 @@ class Calander extends React.Component {
                     "Vaughan Events - ",
                     ""
                   );
-                  sun[sun.length - 1].title = sun[
-                    sun.length - 1
-                  ].title.substring(
-                    sun[sun.length - 1].title.indexOf(
-                      this.state.games.find((element) =>
-                        sun[sun.length - 1].title.includes(element)
-                      )
-                    )
-                  );
+
+                  temptitles =  sun[sun.length - 1].title.split(" - ")
+                  sun[sun.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
+
+                  // sun[sun.length - 1].title = sun[
+                  //   sun.length - 1
+                  // ].title.substring(
+                  //   sun[sun.length - 1].title.indexOf(
+                  //     this.state.games.find((element) =>
+                  //       sun[sun.length - 1].title.includes(element)
+                  //     )
+                  //   )
+                  // );
                   break;
                 default:
                   oth.push(data[i]);
@@ -875,7 +920,7 @@ class Calander extends React.Component {
               dates.push(newDate);
             }else if (oth[i].variants[0].title !== "DEFAULT TITLE" && oth[i].variants[0].title !== "Default Title") {
               splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
-              console.log(oth[i].variants[0].title)
+              //console.log(oth[i].variants[0].title)
               splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
               
               splitTitle = splitTitle.replace(",", "").split(" ");
@@ -927,7 +972,7 @@ class Calander extends React.Component {
 
               let newDate = new Date(Date.parse(editedbody));
               dates.push(newDate);
-              console.log(newDate)
+              //console.log(newDate)
             }
           }
           oth[i].date = dates
