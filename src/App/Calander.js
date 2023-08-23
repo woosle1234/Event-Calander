@@ -56,7 +56,8 @@ class Calander extends React.Component {
         "Shadowverse",
         "FNM",
         "Draft",
-        "YU-GI-OH!"
+        "YU-GI-OH!",
+        "Yu-Gi-Oh!"
       ],
       images: {
         MTG: magic,
@@ -161,7 +162,7 @@ class Calander extends React.Component {
                   //     )
                   //   )
                   // );
-
+                  
                   break;
                 case "Tuesday":
                   tues.push(data[i]);
@@ -288,6 +289,7 @@ class Calander extends React.Component {
                   //     )
                   //   )
                   // );
+                  
                   break;
                 default:
                   oth.push(data[i]);
