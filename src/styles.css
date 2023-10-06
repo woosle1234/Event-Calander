@@ -96,6 +96,6 @@ td strong {
 }
 
 @keyframes calanderAnimation {
-  from {top:0px}
+  from {top:50px}
   to {top:-660px}
 }

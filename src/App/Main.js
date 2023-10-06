@@ -52,13 +52,13 @@ class Main extends React.Component {
           this.setState({ loading: false })
           this.setState({ calanderComponent: <div
             style={{
-              width: "100vw",
+              width: "100%",
               height: "100vh",
               padding: 0
             }}
           >
             <strong>
-              <div className="row  bg-dark" style={{ color: "yellow", position: "absolute", zIndex:10, width:"100vw" }}>
+              <div className="row bg-dark" style={{ color: "yellow", position: "absolute", zIndex:10, width:"101%" }}>
                 <div className="col">
                   <h2>Sunday</h2>
                 </div>

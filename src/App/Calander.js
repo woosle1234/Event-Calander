@@ -78,7 +78,8 @@ class Calander extends React.Component {
         LORCANA:lorcana,
         "Shadowverse: Evolve": sve,
         "Shadowverse Evolve": sve,
-        "Shadowverse": sve
+        "Shadowverse": sve,
+        "Yu-Gi-Oh!":yugioh
       }
     };
   }
@@ -1352,11 +1353,11 @@ class Calander extends React.Component {
     for (let idx = 0; idx < table.length; idx++) {
       tb.push(<tr
         key={idx}
-        style={{ maxWidth: "100vw" }}
+        style={{ maxWidth: "100%", minWidth:"100%" }}
         className="table-dark"
       >
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "sunday " + (weekday === 0 ? "bg-primary" : "")
           }
@@ -1370,7 +1371,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].sunday)}
         </td>
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "monday " + (weekday === 1 ? "bg-primary" : "")
           }
@@ -1384,7 +1385,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].monday)}
         </td>
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "tuesday " +
             (weekday === 2 ? "bg-primary" : "")
@@ -1399,7 +1400,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].tuesday)}
         </td>
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "wednesday " +
             (weekday === 3 ? "bg-primary" : "")
@@ -1418,7 +1419,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].wednesday)}
         </td>
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "thursday " +
             (weekday === 4 ? "bg-primary" : "")
@@ -1433,7 +1434,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].thursday)}
         </td>
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "friday " + (weekday === 5 ? "bg-primary" : "")
           }
@@ -1447,7 +1448,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].friday)}
         </td>
         <td
-          style={{ maxWidth: "15vw" }}
+          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
           className={
             "saturday " +
             (weekday === 6 ? "bg-primary" : "")
@@ -1465,7 +1466,7 @@ class Calander extends React.Component {
     }
 
     this.setState({ tableBody: tb });
-    this.setState({ loading: tb === [] });
+    this.setState({ loading: tb.length === 0 });
   }
 
 
@@ -1486,7 +1487,7 @@ class Calander extends React.Component {
         <table
           className="table align-middle table-bordered w-100 calanderMove"
           id="calanderTable"
-          style={{ minWidth: "100vw", minHeight: "1500px", position: "relative" }}
+          style={{ maxWidth: "100%", minHeight: "1500px", position: "relative", minWidth: "100%", top:"50px" }}
         >
           <tbody>
             {this.state.tableBody}
