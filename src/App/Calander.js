@@ -104,7 +104,7 @@ class Calander extends React.Component {
         oth = [];
         for (let i = 0; i < data.length; i++) {
           console.log(data[i].title)
-          if (data[i].variants.length > 1) {
+          if (data[i].variants.length > 1 || data[i].variants[0].option1.includes("P.M.")|| data[i].variants[0].option1.includes("A.M.")|| data[i].variants[0].option1.includes("PM")|| data[i].variants[0].option1.includes("AM")) {
             oth.push(data[i]);
             let time = [];
             for (let x = 0; x < data[i].variants.length; x++) {
@@ -324,7 +324,7 @@ class Calander extends React.Component {
               }
             } else {
               //Set the times for other events
-
+              console.log(data[i])
 
               oth.push(data[i]);
 
