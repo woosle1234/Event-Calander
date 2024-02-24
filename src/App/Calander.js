@@ -43,6 +43,7 @@ class Calander extends React.Component {
         "Flesh and Blood",
         "Pokemon",
         "Digimon",
+        "One Piece Card Game",
         "One Piece",
         "Speed Duel",
         "Metazoo",
@@ -57,7 +58,8 @@ class Calander extends React.Component {
         "FNM",
         "Draft",
         "YU-GI-OH!",
-        "Yu-Gi-Oh!"
+        "Yu-Gi-Oh!",
+        "Yu-Gi-Oh"
       ],
       images: {
         MTG: magic,
@@ -67,6 +69,7 @@ class Calander extends React.Component {
         "Flesh and Blood": flesh,
         Pokemon: pokemon,
         Digimon: digimon,
+        "One Piece Card Game":onepiece,
         "One Piece": onepiece,
         "Speed Duel": speedduel,
         Metazoo: metazoo,
@@ -79,7 +82,8 @@ class Calander extends React.Component {
         "Shadowverse: Evolve": sve,
         "Shadowverse Evolve": sve,
         "Shadowverse": sve,
-        "Yu-Gi-Oh!":yugioh
+        "Yu-Gi-Oh!":yugioh,
+        "Yu-Gi-Oh":yugioh
       }
     };
   }
@@ -324,7 +328,6 @@ class Calander extends React.Component {
               }
             } else {
               //Set the times for other events
-              console.log(data[i])
 
               oth.push(data[i]);
 
@@ -387,7 +390,6 @@ class Calander extends React.Component {
         }
 
         this.setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun);
-
 
       })
       // .catch((err) => {
@@ -906,6 +908,7 @@ class Calander extends React.Component {
             } else if( oth[i].title.split(" - ").find((element) => weekdays.find(el=>element.includes(el)))) {
               splitTitle =  oth[i].title.split(" - ").find((element) => weekdays.find(el=>element.includes(el)))
               splitTitle = splitTitle.replace(",", "").split(" ");
+              
               if (splitTitle.length >= 4) {
                 splitTitle[2] = splitTitle[2]
                   .replace("th", "")
@@ -983,7 +986,6 @@ class Calander extends React.Component {
           oth[i].date = dates
         }
       }
-
 
 
 
@@ -1349,6 +1351,7 @@ class Calander extends React.Component {
   }
 
   setTableBody(table, weekday) {
+    console.log(table)
     let tb = []
     for (let idx = 0; idx < table.length; idx++) {
       tb.push(<tr
