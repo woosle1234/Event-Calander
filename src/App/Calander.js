@@ -14,8 +14,13 @@ import pokemon from "../Asset/pokemon.png";
 import blank from "../Asset/401gameslogo.png";
 import lorcana from "../Asset/lorcana.png"
 import sve from "../Asset/SVElogo.png"
+import starwars from "../Asset/SWUnlimitedLogo.webp"
+import keyforge from "../Asset/keyforge_tm_transparent.png"
+
 
 const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+const eventsenv = process.env.REACT_APP_EVENTS
+
 
 class Calander extends React.Component {
   constructor(props) {
@@ -41,6 +46,8 @@ class Calander extends React.Component {
         "Weiss Schwarz",
         "Dragon Ball Super",
         "Flesh and Blood",
+        "Star Wars",
+        "Keyforge",
         "Pokemon",
         "Digimon",
         "One Piece Card Game",
@@ -67,8 +74,10 @@ class Calander extends React.Component {
         "Weiss Schwarz": weiss,
         "Dragon Ball Super": dragonball,
         "Flesh and Blood": flesh,
+        Keyforge: keyforge,
         Pokemon: pokemon,
         Digimon: digimon,
+        "Star Wars": starwars,
         "One Piece Card Game":onepiece,
         "One Piece": onepiece,
         "Speed Duel": speedduel,
@@ -92,7 +101,7 @@ class Calander extends React.Component {
     //set up event calander
     await axios
       .get(
-        "https://store.401games.ca/collections/vaughan-events/products.json?limit=250"
+        eventsenv
       )
       .then((res) => {
         let data = res.data.products;

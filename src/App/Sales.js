@@ -12,6 +12,7 @@ import listitemweiss from "../Asset/List/ListItemweiss.png"
 import listitemygo from "../Asset/List/ListItemygo.png"
 import listitemvg from "../Asset/List/ListItemvg.png"
 
+const displayurl = process.env.REACT_APP_DISPLAY
 
 class Sales extends React.Component {
     constructor(props) {
@@ -108,7 +109,7 @@ class Sales extends React.Component {
 
         await axios
             .get(
-                "https://store.401games.ca/collections/vaughan-display/products.json?limit=10"
+                displayurl
             )
             .then(res => {
                 let data = res.data.products;
