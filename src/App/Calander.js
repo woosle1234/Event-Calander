@@ -401,7 +401,7 @@ class Calander extends React.Component {
           catch (ex) {
             
 
-            console.log(ex.linenumber)
+            console.log(ex + " linenumber: "+ ex.stack)
           }
         }
 
@@ -1065,7 +1065,8 @@ class Calander extends React.Component {
       }
       }
       catch(ex){
-        console.log(ex.linenumber)
+        
+        console.log(ex + " linenumber: "+ ex.stack)
       }
     }
 
