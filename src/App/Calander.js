@@ -400,8 +400,7 @@ class Calander extends React.Component {
           }
           catch (ex) {
             
-
-            console.log(ex + " linenumber: "+ ex.stack)
+            console.log("Event: "+data[i].title +"\n"+ ex.stack)
           }
         }
 
@@ -864,13 +863,14 @@ class Calander extends React.Component {
 
 
     for (let i = 0; i < oth.length; i++) {
+      console.log(oth[i].title)
       try{
       if (oth[i].date === undefined) oth[i].date = [];
       for (let x = 0; x < oth[i].variants.length; x++) {
         if (oth[i].date.length === 0) {
           let dates = [];
           if (oth[i].variants.length > 1) {
-            console.log(oth[i].variants[x].title)
+            
             let splitTitle = oth[i].variants[x].title.split(" ");
             if (splitTitle.length > 3) {
               splitTitle[2] = splitTitle[2]
@@ -900,7 +900,6 @@ class Calander extends React.Component {
               dates.push(date);
             }
           } else {
-            console.log(oth[i].title)
             let splitTitle = oth[i].title.split(" - ");
             splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
 
@@ -1066,7 +1065,7 @@ class Calander extends React.Component {
       }
       catch(ex){
         
-        console.log(ex + " linenumber: "+ ex.stack)
+        console.log("Event: "+oth[i].title +"\n"+ ex.stack)
       }
     }
 
