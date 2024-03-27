@@ -78,7 +78,7 @@ class Calander extends React.Component {
         Pokemon: pokemon,
         Digimon: digimon,
         "Star Wars": starwars,
-        "One Piece Card Game":onepiece,
+        "One Piece Card Game": onepiece,
         "One Piece": onepiece,
         "Speed Duel": speedduel,
         Metazoo: metazoo,
@@ -86,13 +86,13 @@ class Calander extends React.Component {
         "Magic: The Gathering": magic,
         MetaZoo: metazoo,
         blanklogo: blank,
-        "Disney Lorcana":lorcana,
-        LORCANA:lorcana,
+        "Disney Lorcana": lorcana,
+        LORCANA: lorcana,
         "Shadowverse: Evolve": sve,
         "Shadowverse Evolve": sve,
         "Shadowverse": sve,
-        "Yu-Gi-Oh!":yugioh,
-        "Yu-Gi-Oh":yugioh
+        "Yu-Gi-Oh!": yugioh,
+        "Yu-Gi-Oh": yugioh
       }
     };
   }
@@ -117,294 +117,301 @@ class Calander extends React.Component {
         oth = [];
         for (let i = 0; i < data.length; i++) {
           console.log(data[i].title)
-          if (data[i].variants.length > 1 || data[i].variants[0].option1.includes("P.M.")|| data[i].variants[0].option1.includes("A.M.")|| data[i].variants[0].option1.includes("PM")|| data[i].variants[0].option1.includes("AM")) {
-            oth.push(data[i]);
-            let time = [];
-            for (let x = 0; x < data[i].variants.length; x++) {
-              let title = data[i].variants[x].title.toUpperCase();
-
-              let timeStr = title.substring(
-                title.includes("PM")
-                  ? title.indexOf("PM") - 6
-                  : title.indexOf("AM") - 6,
-                title.includes("PM")
-                  ? title.indexOf("PM") + 2
-                  : title.indexOf("AM") + 2
-              );
-              if (timeStr.includes("@")) {
-                timeStr = timeStr.substring(timeStr.indexOf("@") + 1);
-              }
-              if (!timeStr.includes(":")) {
-                timeStr = timeStr.replace(" ", "");
-                let index = timeStr.includes("PM")
-                  ? timeStr.indexOf("PM")
-                  : timeStr.indexOf("AM");
-                timeStr =
-                  timeStr.slice(0, index) + ":00 " + timeStr.slice(index);
-              }
-              timeStr = timeStr.replaceAll("t", "");
-
-              time.push(timeStr.trim());
-            }
-
-            oth[oth.length - 1].time = time;
-          } else {
-
-            let day = data[i].tags.find((element) =>
-              element.includes("Events By Day_")
-            );
-            if (day !== undefined && data[i].tags.find((element) => element === "Weekly") !== undefined) {
-              day = day.replace("Events By Day_", "");
-              let temptitles = []
-              switch (day) {
-                case "Monday":
-                  mon.push(data[i]);
-                  mon[mon.length - 1].time = this.getTime(data[i]);
-                  mon[mon.length - 1].title = mon[mon.length - 1].title.replace(
-                    "Vaughan Events - ",
-                    ""
-                  );
-                  temptitles =  mon[mon.length - 1].title.split(" - ")
-                  mon[mon.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // mon[mon.length - 1].title = mon[
-                  //   mon.length - 1
-                  // ].title.substring(
-                  //   mon[mon.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       mon[mon.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  
-                  break;
-                case "Tuesday":
-                  tues.push(data[i]);
-                  tues[tues.length - 1].time = this.getTime(data[i]);
-                  tues[tues.length - 1].title = tues[
-                    tues.length - 1
-                  ].title.replace("Vaughan Events - ", "");
-
-                  temptitles =  tues[tues.length - 1].title.split(" - ")
-                  tues[tues.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // tues[tues.length - 1].title = tues[
-                  //   tues.length - 1
-                  // ].title.substring(
-                  //   tues[tues.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       tues[tues.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  break;
-                case "Wednesday":
-                  wed.push(data[i]);
-                  wed[wed.length - 1].time = this.getTime(data[i]);
-                  wed[wed.length - 1].title = wed[wed.length - 1].title.replace(
-                    "Vaughan Events - ",
-                    ""
-                  );
-                  
-                  temptitles =  wed[wed.length - 1].title.split(" - ")
-                  wed[wed.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // wed[wed.length - 1].title = wed[
-                  //   wed.length - 1
-                  // ].title.substring(
-                  //   wed[wed.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       wed[wed.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  
-                  break;
-                case "Thursday":
-                  thurs.push(data[i]);
-                  thurs[thurs.length - 1].time = this.getTime(data[i]);
-                  thurs[thurs.length - 1].title = thurs[
-                    thurs.length - 1
-                  ].title.replace("Vaughan Events - ", "");
-
-                  temptitles =  thurs[thurs.length - 1].title.split(" - ")
-                  thurs[thurs.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // thurs[thurs.length - 1].title = thurs[
-                  //   thurs.length - 1
-                  // ].title.substring(
-                  //   thurs[thurs.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       thurs[thurs.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  break;
-                case "Friday":
-                  fri.push(data[i]);
-                  fri[fri.length - 1].time = this.getTime(data[i]);
-                  fri[fri.length - 1].title = fri[fri.length - 1].title.replace(
-                    "Vaughan Events - ",
-                    ""
-                  );
-
-                  temptitles =  fri[fri.length - 1].title.split(" - ")
-                  fri[fri.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // fri[fri.length - 1].title = fri[
-                  //   fri.length - 1
-                  // ].title.substring(
-                  //   fri[fri.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       fri[fri.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  
-                  break;
-                case "Saturday":
-                  sat.push(data[i]);
-                  sat[sat.length - 1].time = this.getTime(data[i]);
-                  sat[sat.length - 1].title = sat[sat.length - 1].title.replace(
-                    "Vaughan Events - ",
-                    ""
-                  );
-
-                  temptitles =  sat[sat.length - 1].title.split(" - ")
-                  sat[sat.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // sat[sat.length - 1].title = sat[
-                  //   sat.length - 1
-                  // ].title.substring(
-                  //   sat[sat.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       sat[sat.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  break;
-                case "Sunday":
-                  sun.push(data[i]);
-                  sun[sun.length - 1].time = this.getTime(data[i]);
-                  sun[sun.length - 1].title = sun[sun.length - 1].title.replace(
-                    "Vaughan Events - ",
-                    ""
-                  );
-
-                  temptitles =  sun[sun.length - 1].title.split(" - ")
-                  sun[sun.length - 1].title = temptitles.find(el=>this.state.games.find(elm=>el.includes(elm))!==undefined);
-
-                  // sun[sun.length - 1].title = sun[
-                  //   sun.length - 1
-                  // ].title.substring(
-                  //   sun[sun.length - 1].title.indexOf(
-                  //     this.state.games.find((element) =>
-                  //       sun[sun.length - 1].title.includes(element)
-                  //     )
-                  //   )
-                  // );
-                  
-                  
-                  break;
-                default:
-                  oth.push(data[i]);
-                  let time = [];
-                  for (let x = 0; x < data[i].variants.length; x++) {
-                    let title = data[i].variants[x].title;
-                    let timeStr = title.substring(
-                      title.includes("PM")
-                        ? title.indexOf("PM") - 6
-                        : title.indexOf("AM") - 6,
-                      data[i].variants[x].title.includes("PM")
-                        ? data[i].variants[x].title.indexOf("PM") + 2
-                        : data[i].variants[x].title.indexOf("AM") + 2
-                    );
-                    if (timeStr.includes("@")) {
-                      timeStr = timeStr.substring(timeStr.indexOf("@") + 1);
-                    }
-                    if (!timeStr.includes(":")) {
-                      timeStr = timeStr.replace(" ", "");
-                      let index = timeStr.includes("PM")
-                        ? timeStr.indexOf("PM")
-                        : timeStr.indexOf("AM");
-                      timeStr =
-                        timeStr.slice(0, index) + ":00 " + timeStr.slice(index);
-                    }
-                    time.push(timeStr.trim());
-                  }
-                  oth[oth.length - 1].time = time;
-                  break;
-              }
-            } else {
-              //Set the times for other events
-
+          try {
+            if (data[i].variants.length > 1 || data[i].variants[0].option1.includes("P.M.") || data[i].variants[0].option1.includes("A.M.") || data[i].variants[0].option1.includes("PM") || data[i].variants[0].option1.includes("AM")) {
               oth.push(data[i]);
-
-              oth[oth.length - 1].title = oth[oth.length - 1].title.replace("Vaughan Events - ", "");
-
               let time = [];
-              let editedBody = data[i].body_html
-                .replaceAll("<b>", "")
-                .replaceAll("</b>", "")
-                .replaceAll("<span>", "")
-                .replaceAll("</span>", "")
-                .replaceAll("<strong>", "")
-                .replaceAll("</strong>", "");
+              for (let x = 0; x < data[i].variants.length; x++) {
+                let title = data[i].variants[x].title.toUpperCase();
 
+                let timeStr = title.substring(
+                  title.includes("PM")
+                    ? title.indexOf("PM") - 6
+                    : title.indexOf("AM") - 6,
+                  title.includes("PM")
+                    ? title.indexOf("PM") + 2
+                    : title.indexOf("AM") + 2
+                );
+                if (timeStr.includes("@")) {
+                  timeStr = timeStr.substring(timeStr.indexOf("@") + 1);
+                }
+                if (!timeStr.includes(":")) {
+                  timeStr = timeStr.replace(" ", "");
+                  let index = timeStr.includes("PM")
+                    ? timeStr.indexOf("PM")
+                    : timeStr.indexOf("AM");
+                  timeStr =
+                    timeStr.slice(0, index) + ":00 " + timeStr.slice(index);
+                }
+                timeStr = timeStr.replaceAll("t", "");
 
-              let firstIdx = 0;
-              let secondIdx = 0;
-
-              if (editedBody.includes("p.m.")) {
-                firstIdx = editedBody.indexOf("p.m.") - 6;
-                secondIdx = editedBody.indexOf("p.m.") + 4;
-              } else if (editedBody.includes("a.m.")) {
-                firstIdx = editedBody.indexOf("a.m.") - 6;
-                secondIdx = editedBody.indexOf("a.m.") + 4;
-              } else if (editedBody.includes("P.M.")) {
-                firstIdx = editedBody.indexOf("P.M.") - 6;
-                secondIdx = editedBody.indexOf("P.M.") + 4;
-              } else if (editedBody.includes("A.M.")) {
-                firstIdx = editedBody.indexOf("A.M.") - 6;
-                secondIdx = editedBody.indexOf("A.M.") + 4;
-              } else if (editedBody.includes("PM")) {
-                firstIdx = editedBody.indexOf("PM") - 6;
-                secondIdx = editedBody.indexOf("PM") + 2;
-              } else if (editedBody.includes("AM")) {
-                firstIdx = editedBody.indexOf("AM") - 6;
-                secondIdx = editedBody.indexOf("AM") + 2;
+                time.push(timeStr.trim());
               }
-
-              let slicedText = editedBody.slice(firstIdx, secondIdx);
-              slicedText = slicedText
-                .replace("p.m.", "PM")
-                .replace("a.m.", "AM")
-                .replace("P.M.", "PM")
-                .replace("A.M.", "AM")
-              
-              
-              if (slicedText.match(':').index === 0) {
-                slicedText = slicedText.slice(1)
-              }
-              slicedText = slicedText.trim()
-
-              slicedText = slicedText.replaceAll(".", "")
-
-              time.push(slicedText);
 
               oth[oth.length - 1].time = time;
+            } else {
 
+              let day = data[i].tags.find((element) =>
+                element.includes("Events By Day_")
+              );
+              if (day !== undefined && data[i].tags.find((element) => element === "Weekly") !== undefined) {
+                day = day.replace("Events By Day_", "");
+                let temptitles = []
+                switch (day) {
+                  case "Monday":
+                    mon.push(data[i]);
+                    mon[mon.length - 1].time = this.getTime(data[i]);
+                    mon[mon.length - 1].title = mon[mon.length - 1].title.replace(
+                      "Vaughan Events - ",
+                      ""
+                    );
+                    temptitles = mon[mon.length - 1].title.split(" - ")
+                    mon[mon.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // mon[mon.length - 1].title = mon[
+                    //   mon.length - 1
+                    // ].title.substring(
+                    //   mon[mon.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       mon[mon.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+
+                    break;
+                  case "Tuesday":
+                    tues.push(data[i]);
+                    tues[tues.length - 1].time = this.getTime(data[i]);
+                    tues[tues.length - 1].title = tues[
+                      tues.length - 1
+                    ].title.replace("Vaughan Events - ", "");
+
+                    temptitles = tues[tues.length - 1].title.split(" - ")
+                    tues[tues.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // tues[tues.length - 1].title = tues[
+                    //   tues.length - 1
+                    // ].title.substring(
+                    //   tues[tues.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       tues[tues.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+                    break;
+                  case "Wednesday":
+                    wed.push(data[i]);
+                    wed[wed.length - 1].time = this.getTime(data[i]);
+                    wed[wed.length - 1].title = wed[wed.length - 1].title.replace(
+                      "Vaughan Events - ",
+                      ""
+                    );
+
+                    temptitles = wed[wed.length - 1].title.split(" - ")
+                    wed[wed.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // wed[wed.length - 1].title = wed[
+                    //   wed.length - 1
+                    // ].title.substring(
+                    //   wed[wed.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       wed[wed.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+
+                    break;
+                  case "Thursday":
+                    thurs.push(data[i]);
+                    thurs[thurs.length - 1].time = this.getTime(data[i]);
+                    thurs[thurs.length - 1].title = thurs[
+                      thurs.length - 1
+                    ].title.replace("Vaughan Events - ", "");
+
+                    temptitles = thurs[thurs.length - 1].title.split(" - ")
+                    thurs[thurs.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // thurs[thurs.length - 1].title = thurs[
+                    //   thurs.length - 1
+                    // ].title.substring(
+                    //   thurs[thurs.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       thurs[thurs.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+                    break;
+                  case "Friday":
+                    fri.push(data[i]);
+                    fri[fri.length - 1].time = this.getTime(data[i]);
+                    fri[fri.length - 1].title = fri[fri.length - 1].title.replace(
+                      "Vaughan Events - ",
+                      ""
+                    );
+
+                    temptitles = fri[fri.length - 1].title.split(" - ")
+                    fri[fri.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // fri[fri.length - 1].title = fri[
+                    //   fri.length - 1
+                    // ].title.substring(
+                    //   fri[fri.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       fri[fri.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+
+                    break;
+                  case "Saturday":
+                    sat.push(data[i]);
+                    sat[sat.length - 1].time = this.getTime(data[i]);
+                    sat[sat.length - 1].title = sat[sat.length - 1].title.replace(
+                      "Vaughan Events - ",
+                      ""
+                    );
+
+                    temptitles = sat[sat.length - 1].title.split(" - ")
+                    sat[sat.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // sat[sat.length - 1].title = sat[
+                    //   sat.length - 1
+                    // ].title.substring(
+                    //   sat[sat.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       sat[sat.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+                    break;
+                  case "Sunday":
+                    sun.push(data[i]);
+                    sun[sun.length - 1].time = this.getTime(data[i]);
+                    sun[sun.length - 1].title = sun[sun.length - 1].title.replace(
+                      "Vaughan Events - ",
+                      ""
+                    );
+
+                    temptitles = sun[sun.length - 1].title.split(" - ")
+                    sun[sun.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+
+                    // sun[sun.length - 1].title = sun[
+                    //   sun.length - 1
+                    // ].title.substring(
+                    //   sun[sun.length - 1].title.indexOf(
+                    //     this.state.games.find((element) =>
+                    //       sun[sun.length - 1].title.includes(element)
+                    //     )
+                    //   )
+                    // );
+
+
+                    break;
+                  default:
+                    oth.push(data[i]);
+                    let time = [];
+                    for (let x = 0; x < data[i].variants.length; x++) {
+                      let title = data[i].variants[x].title;
+                      let timeStr = title.substring(
+                        title.includes("PM")
+                          ? title.indexOf("PM") - 6
+                          : title.indexOf("AM") - 6,
+                        data[i].variants[x].title.includes("PM")
+                          ? data[i].variants[x].title.indexOf("PM") + 2
+                          : data[i].variants[x].title.indexOf("AM") + 2
+                      );
+                      if (timeStr.includes("@")) {
+                        timeStr = timeStr.substring(timeStr.indexOf("@") + 1);
+                      }
+                      if (!timeStr.includes(":")) {
+                        timeStr = timeStr.replace(" ", "");
+                        let index = timeStr.includes("PM")
+                          ? timeStr.indexOf("PM")
+                          : timeStr.indexOf("AM");
+                        timeStr =
+                          timeStr.slice(0, index) + ":00 " + timeStr.slice(index);
+                      }
+                      time.push(timeStr.trim());
+                    }
+                    oth[oth.length - 1].time = time;
+                    break;
+                }
+              } else {
+                //Set the times for other events
+
+                oth.push(data[i]);
+
+                oth[oth.length - 1].title = oth[oth.length - 1].title.replace("Vaughan Events - ", "");
+
+                let time = [];
+                let editedBody = data[i].body_html
+                  .replaceAll("<b>", "")
+                  .replaceAll("</b>", "")
+                  .replaceAll("<span>", "")
+                  .replaceAll("</span>", "")
+                  .replaceAll("<strong>", "")
+                  .replaceAll("</strong>", "");
+
+
+                let firstIdx = 0;
+                let secondIdx = 0;
+
+                if (editedBody.includes("p.m.")) {
+                  firstIdx = editedBody.indexOf("p.m.") - 6;
+                  secondIdx = editedBody.indexOf("p.m.") + 4;
+                } else if (editedBody.includes("a.m.")) {
+                  firstIdx = editedBody.indexOf("a.m.") - 6;
+                  secondIdx = editedBody.indexOf("a.m.") + 4;
+                } else if (editedBody.includes("P.M.")) {
+                  firstIdx = editedBody.indexOf("P.M.") - 6;
+                  secondIdx = editedBody.indexOf("P.M.") + 4;
+                } else if (editedBody.includes("A.M.")) {
+                  firstIdx = editedBody.indexOf("A.M.") - 6;
+                  secondIdx = editedBody.indexOf("A.M.") + 4;
+                } else if (editedBody.includes("PM")) {
+                  firstIdx = editedBody.indexOf("PM") - 6;
+                  secondIdx = editedBody.indexOf("PM") + 2;
+                } else if (editedBody.includes("AM")) {
+                  firstIdx = editedBody.indexOf("AM") - 6;
+                  secondIdx = editedBody.indexOf("AM") + 2;
+                }
+
+                let slicedText = editedBody.slice(firstIdx, secondIdx);
+                slicedText = slicedText
+                  .replace("p.m.", "PM")
+                  .replace("a.m.", "AM")
+                  .replace("P.M.", "PM")
+                  .replace("A.M.", "AM")
+
+
+                if (slicedText.match(':').index === 0) {
+                  slicedText = slicedText.slice(1)
+                }
+                slicedText = slicedText.trim()
+
+                slicedText = slicedText.replaceAll(".", "")
+
+                time.push(slicedText);
+
+                oth[oth.length - 1].time = time;
+
+              }
             }
+          }
+          catch (ex) {
+            
+
+            console.log(ex.linenumber)
           }
         }
 
         this.setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun);
 
       })
-      // .catch((err) => {
-      //   this.setState({ loading: false });
-      //   console.log("Cannot get data from 401 games " + err);
-      // });
+    // .catch((err) => {
+    //   this.setState({ loading: false });
+    //   console.log("Cannot get data from 401 games " + err);
+    // });
 
   }
 
@@ -857,12 +864,13 @@ class Calander extends React.Component {
 
 
     for (let i = 0; i < oth.length; i++) {
-
+      try{
       if (oth[i].date === undefined) oth[i].date = [];
       for (let x = 0; x < oth[i].variants.length; x++) {
         if (oth[i].date.length === 0) {
           let dates = [];
           if (oth[i].variants.length > 1) {
+            console.log(oth[i].variants[x].title)
             let splitTitle = oth[i].variants[x].title.split(" ");
             if (splitTitle.length > 3) {
               splitTitle[2] = splitTitle[2]
@@ -892,9 +900,10 @@ class Calander extends React.Component {
               dates.push(date);
             }
           } else {
+            console.log(oth[i].title)
             let splitTitle = oth[i].title.split(" - ");
             splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
-            
+
             if (splitTitle !== undefined) {
               splitTitle = splitTitle.replace(",", "").split(" ");
               if (splitTitle.length >= 4) {
@@ -914,10 +923,10 @@ class Calander extends React.Component {
 
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
-            } else if( oth[i].title.split(" - ").find((element) => weekdays.find(el=>element.includes(el)))) {
-              splitTitle =  oth[i].title.split(" - ").find((element) => weekdays.find(el=>element.includes(el)))
+            } else if (oth[i].title.split(" - ").find((element) => weekdays.find(el => element.includes(el)))) {
+              splitTitle = oth[i].title.split(" - ").find((element) => weekdays.find(el => element.includes(el)))
               splitTitle = splitTitle.replace(",", "").split(" ");
-              
+
               if (splitTitle.length >= 4) {
                 splitTitle[2] = splitTitle[2]
                   .replace("th", "")
@@ -935,13 +944,13 @@ class Calander extends React.Component {
 
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
-            }else if (oth[i].variants[0].title !== "DEFAULT TITLE" && oth[i].variants[0].title !== "Default Title") {
+            } else if (oth[i].variants[0].title !== "DEFAULT TITLE" && oth[i].variants[0].title !== "Default Title") {
               splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
               //console.log(oth[i].variants[0].title)
               splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
-              
+
               splitTitle = splitTitle.replace(",", "").split(" ");
-              
+
               splitTitle[1] = splitTitle[1]
                 .replace("TH", "")
                 .replace("RD", "")
@@ -958,23 +967,23 @@ class Calander extends React.Component {
                   .replace("rd", "")
                   .replace("nd", "")
                   .replace("st", "");
-              } 
+              }
               let newDate = new Date(Date.parse(splitTitle));
               dates.push(newDate);
-            }else{
+            } else {
               //get the date keyword from the html body then retrieve the date
               let firstIdx = oth[i].body_html.indexOf("<strong>Date:</strong></span>")
-              let editedbody = oth[i].body_html.slice(firstIdx+30)
-              editedbody = editedbody.slice(0,editedbody.indexOf("</p>"))
+              let editedbody = oth[i].body_html.slice(firstIdx + 30)
+              editedbody = editedbody.slice(0, editedbody.indexOf("</p>"))
               editedbody = editedbody.toUpperCase()
               editedbody = editedbody.replace(",", "").split(" ");
-              
+
               editedbody[1] = editedbody[1]
                 .replace("TH", "")
                 .replace("RD", "")
                 .replace("ND", "")
                 .replace("ST", "");
-                editedbody[2] = editedbody[2]
+              editedbody[2] = editedbody[2]
                 .replace("TH", "")
                 .replace("RD", "")
                 .replace("ND", "")
@@ -985,7 +994,7 @@ class Calander extends React.Component {
                   .replace("rd", "")
                   .replace("nd", "")
                   .replace("st", "");
-              } 
+              }
 
               let newDate = new Date(Date.parse(editedbody));
               dates.push(newDate);
@@ -1023,7 +1032,7 @@ class Calander extends React.Component {
             typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
 
           event.date = eventDay;
-          
+
 
 
           if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
@@ -1053,6 +1062,10 @@ class Calander extends React.Component {
                 break;
             }
         }
+      }
+      }
+      catch(ex){
+        console.log(ex.linenumber)
       }
     }
 
@@ -1365,11 +1378,11 @@ class Calander extends React.Component {
     for (let idx = 0; idx < table.length; idx++) {
       tb.push(<tr
         key={idx}
-        style={{ maxWidth: "100%", minWidth:"100%" }}
+        style={{ maxWidth: "100%", minWidth: "100%" }}
         className="table-dark"
       >
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "sunday " + (weekday === 0 ? "bg-primary" : "")
           }
@@ -1383,7 +1396,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].sunday)}
         </td>
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "monday " + (weekday === 1 ? "bg-primary" : "")
           }
@@ -1397,7 +1410,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].monday)}
         </td>
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "tuesday " +
             (weekday === 2 ? "bg-primary" : "")
@@ -1412,7 +1425,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].tuesday)}
         </td>
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "wednesday " +
             (weekday === 3 ? "bg-primary" : "")
@@ -1431,7 +1444,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].wednesday)}
         </td>
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "thursday " +
             (weekday === 4 ? "bg-primary" : "")
@@ -1446,7 +1459,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].thursday)}
         </td>
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "friday " + (weekday === 5 ? "bg-primary" : "")
           }
@@ -1460,7 +1473,7 @@ class Calander extends React.Component {
           {this.setImage(table[idx].friday)}
         </td>
         <td
-          style={{ minWidth: "14.28%", maxWidth:"15%", width:"14.28%" }}
+          style={{ minWidth: "14.28%", maxWidth: "15%", width: "14.28%" }}
           className={
             "saturday " +
             (weekday === 6 ? "bg-primary" : "")
@@ -1499,7 +1512,7 @@ class Calander extends React.Component {
         <table
           className="table align-middle table-bordered w-100 calanderMove"
           id="calanderTable"
-          style={{ maxWidth: "100%", minHeight: "1500px", position: "relative", minWidth: "100%", top:"50px" }}
+          style={{ maxWidth: "100%", minHeight: "1500px", position: "relative", minWidth: "100%", top: "50px" }}
         >
           <tbody>
             {this.state.tableBody}
