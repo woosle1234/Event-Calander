@@ -116,7 +116,7 @@ class Calander extends React.Component {
         sun = [];
         oth = [];
         for (let i = 0; i < data.length; i++) {
-          console.log(data[i].title)
+          //console.log(data[i].title)
           try {
             if (data[i].variants.length > 1 || data[i].variants[0].option1.includes("P.M.") || data[i].variants[0].option1.includes("A.M.") || data[i].variants[0].option1.includes("PM") || data[i].variants[0].option1.includes("AM")) {
               oth.push(data[i]);
@@ -270,7 +270,6 @@ class Calander extends React.Component {
                       "Vaughan Events - ",
                       ""
                     );
-
                     temptitles = sat[sat.length - 1].title.split(" - ")
                     sat[sat.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
 
@@ -291,8 +290,9 @@ class Calander extends React.Component {
                       "Vaughan Events - ",
                       ""
                     );
-
+                      
                     temptitles = sun[sun.length - 1].title.split(" - ")
+                    
                     sun[sun.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
 
                     // sun[sun.length - 1].title = sun[
@@ -403,7 +403,6 @@ class Calander extends React.Component {
             console.log("Event: "+data[i].title +"\n"+ ex.stack)
           }
         }
-
         this.setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun);
 
       })
@@ -863,7 +862,7 @@ class Calander extends React.Component {
 
 
     for (let i = 0; i < oth.length; i++) {
-      console.log(oth[i].title)
+      //console.log(oth[i].title)
       try{
       if (oth[i].date === undefined) oth[i].date = [];
       for (let x = 0; x < oth[i].variants.length; x++) {
@@ -1031,30 +1030,40 @@ class Calander extends React.Component {
             typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
 
           event.date = eventDay;
-
-
+          let temptitles = []
+          temptitles = event.title.split(" - ")
+          event.title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+          let game = this.state.games.find(elm => event.tags.includes(elm))
 
           if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
             switch (eventDay.getDay()) {
               case 0:
+                //search for weekly events and remove them
+                sun = sun.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 sun.push(event);
                 break;
               case 1:
+                mon = mon.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 mon.push(event);
                 break;
               case 2:
+                tues = tues.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 tues.push(event);
                 break;
               case 3:
+                wed = wed.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 wed.push(event);
                 break;
               case 4:
+                thurs = thurs.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 thurs.push(event);
                 break;
               case 5:
+                fri = fri.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 fri.push(event);
                 break;
               case 6:
+                sat = sat.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
                 sat.push(event);
                 break;
               default:
@@ -1373,7 +1382,7 @@ class Calander extends React.Component {
   }
 
   setTableBody(table, weekday) {
-    console.log(table)
+    //console.log(table)
     let tb = []
     for (let idx = 0; idx < table.length; idx++) {
       tb.push(<tr
