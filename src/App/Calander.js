@@ -859,6 +859,13 @@ class Calander extends React.Component {
 
   setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun) {
     let today = new Date(Date.now());
+    let displaySun = []
+    let displaySat = []
+    let displayMon = []
+    let displayTue = []
+    let displayWed = []
+    let displayThu = []
+    let displayFri = []
 
 
     for (let i = 0; i < oth.length; i++) {
@@ -1033,37 +1040,58 @@ class Calander extends React.Component {
           let temptitles = []
           temptitles = event.title.split(" - ")
           event.title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
-          let game = this.state.games.find(elm => event.tags.includes(elm))
+          let game = this.state.games.find(elm => event.title.includes(elm))
+          displaySun = sun
+          displaySat = sat
+          displayMon = mon
+          displayTue = tues
+          displayWed = wed
+          displayThu = thurs
+          displayFri = fri
 
           if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
             switch (eventDay.getDay()) {
               case 0:
                 //search for weekly events and remove them
-                sun = sun.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displaySun = displaySun.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displaySun.push(event)
                 sun.push(event);
                 break;
               case 1:
-                mon = mon.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displayMon = displayMon.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displayMon.push(event)
                 mon.push(event);
                 break;
               case 2:
-                tues = tues.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displayTue = displayTue.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displayTue.push(event)
                 tues.push(event);
                 break;
               case 3:
-                wed = wed.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displayWed = displayWed.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displayWed.push(event)
                 wed.push(event);
                 break;
               case 4:
-                thurs = thurs.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displayThu = displayThu.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displayThu.push(event)
                 thurs.push(event);
                 break;
               case 5:
-                fri = fri.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displayFri = displayFri.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displayFri.push(event)
                 fri.push(event);
                 break;
               case 6:
-                sat = sat.filter(el=> !(el.tags.includes("Weekly")&& el.tags.includes(game)))
+                if(game !== "MTG" && game !== "Magic the Gathering")
+                  displaySat = displaySat.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                displaySat.push(event)
                 sat.push(event);
                 break;
               default:
@@ -1087,6 +1115,14 @@ class Calander extends React.Component {
     sat.sort(this.sortEvents);
     sun.sort(this.sortEvents);
 
+    displayMon.sort(this.sortEvents);
+    displayTue.sort(this.sortEvents);
+    displayWed.sort(this.sortEvents);
+    displayThu.sort(this.sortEvents);
+    displayFri.sort(this.sortEvents);
+    displaySat.sort(this.sortEvents);
+    displaySun.sort(this.sortEvents);
+
     this.setState({
       monday: mon,
       tuesday: tues,
@@ -1097,7 +1133,8 @@ class Calander extends React.Component {
       sunday: sun,
       other: oth
     });
-    this.setCalander(oth, mon, tues, wed, thurs, fri, sat, sun);
+
+    this.setCalander(oth, displayMon, displayTue, displayWed, displayThu, displayFri, displaySat, displaySun);
   }
 
   setDate(table) {
@@ -1232,7 +1269,7 @@ class Calander extends React.Component {
   setCalander(oth, mon, tues, wed, thurs, fri, sat, sun) {
 
     let table = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 31; i++) {
       let line = [];
       let set = 0;
       if (sun[i] !== undefined) {

@@ -249,7 +249,7 @@ class Sales extends React.Component {
                     {this.getRow(this.state.productInfo[7], 7, "listItem2")}
                     {this.getRow(this.state.productInfo[8], 8, "listItem1")}
                     {this.getRow(this.state.productInfo[9], 9, "listItem2")}
-                    <tr colspan="100%" key="10" style={{ height: "900px", padding:0 }}>
+                    <tr colSpan="100%" key="10" style={{ height: "900px", padding:0 }}>
                         <td style={{ padding:0, margin:0 }}>
                             <div style={{ width: "100%", height:"100%", padding:0, margin:0}}>
                                 <img style={{ width: "100%", height: "auto" }} src={enditem} alt="..." />
