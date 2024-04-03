@@ -869,7 +869,7 @@ class Calander extends React.Component {
 
 
     for (let i = 0; i < oth.length; i++) {
-      //console.log(oth[i].title)
+      console.log(oth[i].title)
       try{
       if (oth[i].date === undefined) oth[i].date = [];
       for (let x = 0; x < oth[i].variants.length; x++) {
