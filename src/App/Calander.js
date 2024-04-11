@@ -36,7 +36,7 @@ class Calander extends React.Component {
       sunday: [],
       other: [],
       table: [],
-      date: "",
+      date: [],
       loading: true,
       weekday: 0,
       tableBody: [],
@@ -104,8 +104,7 @@ class Calander extends React.Component {
         eventsenv
       )
       .then((res) => {
-        let data = res.data.products;
-
+        let data = structuredClone(res.data.products);
         let mon, tues, wed, thurs, fri, sat, sun, oth;
         mon = [];
         tues = [];
@@ -116,14 +115,14 @@ class Calander extends React.Component {
         sun = [];
         oth = [];
         for (let i = 0; i < data.length; i++) {
-          //console.log(data[i].title)
+          
           try {
             if (data[i].variants.length > 1 || data[i].variants[0].option1.includes("P.M.") || data[i].variants[0].option1.includes("A.M.") || data[i].variants[0].option1.includes("PM") || data[i].variants[0].option1.includes("AM")) {
               oth.push(data[i]);
               let time = [];
               for (let x = 0; x < data[i].variants.length; x++) {
                 let title = data[i].variants[x].title.toUpperCase();
-
+                
                 let timeStr = title.substring(
                   title.includes("PM")
                     ? title.indexOf("PM") - 6
@@ -290,9 +289,9 @@ class Calander extends React.Component {
                       "Vaughan Events - ",
                       ""
                     );
-                      
+
                     temptitles = sun[sun.length - 1].title.split(" - ")
-                    
+
                     sun[sun.length - 1].title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
 
                     // sun[sun.length - 1].title = sun[
@@ -309,6 +308,7 @@ class Calander extends React.Component {
                     break;
                   default:
                     oth.push(data[i]);
+                    
                     let time = [];
                     for (let x = 0; x < data[i].variants.length; x++) {
                       let title = data[i].variants[x].title;
@@ -338,13 +338,13 @@ class Calander extends React.Component {
                 }
               } else {
                 //Set the times for other events
+                let otherevent = structuredClone(data[i]);
 
-                oth.push(data[i]);
-
-                oth[oth.length - 1].title = oth[oth.length - 1].title.replace("Vaughan Events - ", "");
+                otherevent.title = otherevent.title.replace("Vaughan Events - ", "");
+                
 
                 let time = [];
-                let editedBody = data[i].body_html
+                let editedBody = otherevent.body_html
                   .replaceAll("<b>", "")
                   .replaceAll("</b>", "")
                   .replaceAll("<span>", "")
@@ -393,17 +393,24 @@ class Calander extends React.Component {
 
                 time.push(slicedText);
 
-                oth[oth.length - 1].time = time;
+                otherevent.time = time;
 
+                oth.push(otherevent);
+                
               }
             }
           }
           catch (ex) {
-            
-            console.log("Event: "+data[i].title +"\n"+ ex.stack)
+
+
+            console.log("Event: " + data[i].title + "\n" + ex.stack)
           }
         }
+        
+        
         this.setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun);
+        
+        
 
       })
     // .catch((err) => {
@@ -866,243 +873,257 @@ class Calander extends React.Component {
     let displayWed = []
     let displayThu = []
     let displayFri = []
+    displaySun = sun
+    displaySat = sat
+    displayMon = mon
+    displayTue = tues
+    displayWed = wed
+    displayThu = thurs
+    displayFri = fri
 
 
     for (let i = 0; i < oth.length; i++) {
-      console.log(oth[i].title)
-      try{
-      if (oth[i].date === undefined) oth[i].date = [];
-      for (let x = 0; x < oth[i].variants.length; x++) {
-        if (oth[i].date.length === 0) {
-          let dates = [];
-          if (oth[i].variants.length > 1) {
-            
-            let splitTitle = oth[i].variants[x].title.split(" ");
-            if (splitTitle.length > 3) {
-              splitTitle[2] = splitTitle[2]
-                .replace("th", "")
-                .replace("rd", "")
-                .replace("nd", "")
-                .replace("st", "");
-              splitTitle[3] = splitTitle[3].replace("@", "");
-              let newParseTitle = splitTitle.slice(0, 3);
-              newParseTitle.push(today.getFullYear());
-              let date = new Date(Date.parse(newParseTitle));
-              dates.push(date);
+      try {
+        if (oth[i].date === undefined) oth[i].date = [];
+        for (let x = 0; x < oth[i].variants.length; x++) {
+          if (oth[i].date.length === 0) {
+            let dates = [];
+            if (oth[i].variants.length > 1) {
 
-            } else {
-              splitTitle[1] = splitTitle[1]
-                .replace("th", "")
-                .replace("rd", "")
-                .replace("nd", "")
-                .replace("st", "");
-              if (splitTitle[2]) splitTitle[2] = splitTitle[2].replace("@", "");
-              else {
-                oth[i].time = this.getTime(oth[i]);
-              }
-              let newParseTitle = splitTitle.slice(0, 2);
-              newParseTitle.push(today.getFullYear());
-              let date = new Date(Date.parse(newParseTitle));
-              dates.push(date);
-            }
-          } else {
-            let splitTitle = oth[i].title.split(" - ");
-            splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
-
-            if (splitTitle !== undefined) {
-              splitTitle = splitTitle.replace(",", "").split(" ");
-              if (splitTitle.length >= 4) {
+              let splitTitle = oth[i].variants[x].title.split(" ");
+              if (splitTitle.length > 3) {
                 splitTitle[2] = splitTitle[2]
                   .replace("th", "")
                   .replace("rd", "")
                   .replace("nd", "")
                   .replace("st", "");
+                splitTitle[3] = splitTitle[3].replace("@", "");
+                let newParseTitle = splitTitle.slice(0, 3);
+                newParseTitle.push(today.getFullYear());
+                let date = new Date(Date.parse(newParseTitle));
+                dates.push(date);
+
               } else {
                 splitTitle[1] = splitTitle[1]
                   .replace("th", "")
                   .replace("rd", "")
                   .replace("nd", "")
                   .replace("st", "");
+                if (splitTitle[2]) splitTitle[2] = splitTitle[2].replace("@", "");
+                else {
+                  oth[i].time = this.getTime(oth[i]);
+                }
+                let newParseTitle = splitTitle.slice(0, 2);
+                newParseTitle.push(today.getFullYear());
+                let date = new Date(Date.parse(newParseTitle));
+                dates.push(date);
               }
-
-
-              let newDate = new Date(Date.parse(splitTitle));
-              dates.push(newDate);
-            } else if (oth[i].title.split(" - ").find((element) => weekdays.find(el => element.includes(el)))) {
-              splitTitle = oth[i].title.split(" - ").find((element) => weekdays.find(el => element.includes(el)))
-              splitTitle = splitTitle.replace(",", "").split(" ");
-
-              if (splitTitle.length >= 4) {
-                splitTitle[2] = splitTitle[2]
-                  .replace("th", "")
-                  .replace("rd", "")
-                  .replace("nd", "")
-                  .replace("st", "");
-              } else {
-                splitTitle[1] = splitTitle[1]
-                  .replace("th", "")
-                  .replace("rd", "")
-                  .replace("nd", "")
-                  .replace("st", "");
-              }
-
-
-              let newDate = new Date(Date.parse(splitTitle));
-              dates.push(newDate);
-            } else if (oth[i].variants[0].title !== "DEFAULT TITLE" && oth[i].variants[0].title !== "Default Title") {
-              splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
-              //console.log(oth[i].variants[0].title)
-              splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
-
-              splitTitle = splitTitle.replace(",", "").split(" ");
-
-              splitTitle[1] = splitTitle[1]
-                .replace("TH", "")
-                .replace("RD", "")
-                .replace("ND", "")
-                .replace("ST", "");
-              splitTitle[2] = splitTitle[2]
-                .replace("TH", "")
-                .replace("RD", "")
-                .replace("ND", "")
-                .replace("ST", "");
-              if (splitTitle.length >= 4) {
-                splitTitle[3] = splitTitle[3]
-                  .replace("th", "")
-                  .replace("rd", "")
-                  .replace("nd", "")
-                  .replace("st", "");
-              }
-              let newDate = new Date(Date.parse(splitTitle));
-              dates.push(newDate);
             } else {
-              //get the date keyword from the html body then retrieve the date
-              let firstIdx = oth[i].body_html.indexOf("<strong>Date:</strong></span>")
-              let editedbody = oth[i].body_html.slice(firstIdx + 30)
-              editedbody = editedbody.slice(0, editedbody.indexOf("</p>"))
-              editedbody = editedbody.toUpperCase()
-              editedbody = editedbody.replace(",", "").split(" ");
+              if (oth[i].title !== undefined) {
+                let splitTitle = oth[i].title.split(" - ");
+                splitTitle = splitTitle.find((element) => element.includes(today.getFullYear().toString()));
 
-              editedbody[1] = editedbody[1]
-                .replace("TH", "")
-                .replace("RD", "")
-                .replace("ND", "")
-                .replace("ST", "");
-              editedbody[2] = editedbody[2]
-                .replace("TH", "")
-                .replace("RD", "")
-                .replace("ND", "")
-                .replace("ST", "");
-              if (editedbody.length >= 4) {
-                editedbody[3] = editedbody[3]
-                  .replace("th", "")
-                  .replace("rd", "")
-                  .replace("nd", "")
-                  .replace("st", "");
+                if (splitTitle !== undefined) {
+                  splitTitle = splitTitle.replace(",", "").split(" ");
+                  if (splitTitle.length >= 4) {
+                    splitTitle[2] = splitTitle[2]
+                      .replace("th", "")
+                      .replace("rd", "")
+                      .replace("nd", "")
+                      .replace("st", "");
+                  } else {
+                    splitTitle[1] = splitTitle[1]
+                      .replace("th", "")
+                      .replace("rd", "")
+                      .replace("nd", "")
+                      .replace("st", "");
+                  }
+
+
+                  let newDate = new Date(Date.parse(splitTitle));
+                  dates.push(newDate);
+                }
+
+
+              } else if (oth[i].title.split(" - ").find((element) => weekdays.find(el => element.includes(el)))) {
+                splitTitle = oth[i].title.split(" - ").find((element) => weekdays.find(el => element.includes(el)))
+                splitTitle = splitTitle.replace(",", "").split(" ");
+
+                if (splitTitle.length >= 4) {
+                  splitTitle[2] = splitTitle[2]
+                    .replace("th", "")
+                    .replace("rd", "")
+                    .replace("nd", "")
+                    .replace("st", "");
+                } else {
+                  splitTitle[1] = splitTitle[1]
+                    .replace("th", "")
+                    .replace("rd", "")
+                    .replace("nd", "")
+                    .replace("st", "");
+                }
+
+
+                let newDate = new Date(Date.parse(splitTitle));
+                dates.push(newDate);
+              } else if (oth[i].variants[0].title !== "DEFAULT TITLE" && oth[i].variants[0].title !== "Default Title") {
+                splitTitle = oth[i].variants[0].title.toUpperCase().split(" @ ");
+                //console.log(oth[i].variants[0].title)
+                splitTitle = splitTitle.find((element) => element.includes("TH") || element.includes("RD") || element.includes("ST") || element.includes("ND"));
+
+                splitTitle = splitTitle.replace(",", "").split(" ");
+
+                splitTitle[1] = splitTitle[1]
+                  .replace("TH", "")
+                  .replace("RD", "")
+                  .replace("ND", "")
+                  .replace("ST", "");
+                splitTitle[2] = splitTitle[2]
+                  .replace("TH", "")
+                  .replace("RD", "")
+                  .replace("ND", "")
+                  .replace("ST", "");
+                if (splitTitle.length >= 4) {
+                  splitTitle[3] = splitTitle[3]
+                    .replace("th", "")
+                    .replace("rd", "")
+                    .replace("nd", "")
+                    .replace("st", "");
+                }
+                let newDate = new Date(Date.parse(splitTitle));
+                dates.push(newDate);
+              } else {
+                //get the date keyword from the html body then retrieve the date
+                let firstIdx = oth[i].body_html.indexOf("<strong>Date:</strong></span>")
+                let editedbody = oth[i].body_html.slice(firstIdx + 30)
+                editedbody = editedbody.slice(0, editedbody.indexOf("</p>"))
+                editedbody = editedbody.toUpperCase()
+                editedbody = editedbody.replace(",", "").split(" ");
+
+                editedbody[1] = editedbody[1]
+                  .replace("TH", "")
+                  .replace("RD", "")
+                  .replace("ND", "")
+                  .replace("ST", "");
+                editedbody[2] = editedbody[2]
+                  .replace("TH", "")
+                  .replace("RD", "")
+                  .replace("ND", "")
+                  .replace("ST", "");
+                if (editedbody.length >= 4) {
+                  editedbody[3] = editedbody[3]
+                    .replace("th", "")
+                    .replace("rd", "")
+                    .replace("nd", "")
+                    .replace("st", "");
+                }
+
+                let newDate = new Date(Date.parse(editedbody));
+                dates.push(newDate);
+                //console.log(newDate)
               }
-
-              let newDate = new Date(Date.parse(editedbody));
-              dates.push(newDate);
-              //console.log(newDate)
             }
+            oth[i].date = dates
           }
-          oth[i].date = dates
         }
-      }
 
 
 
-      for (let x = 0; x < oth[i].variants.length; x++) {
-        const diffTime = Math.abs(oth[i].date[x] - today)
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        let event = oth[i];
+        for (let x = 0; x < oth[i].variants.length; x++) {
+          const diffTime = Math.abs(oth[i].date[x] - today)
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          let event = oth[i];
 
-        let eventDay = oth[i].date[x] !== undefined ? oth[i].date[x] : oth[i].date;
-        eventDay = eventDay instanceof Date ? eventDay : eventDay[0]
-        eventDay = eventDay instanceof Date ? eventDay : new Date(eventDay)
-
-
-        var start = new Date(today.getFullYear(), 0, 0);
-        var difftoday = (today - start) + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
-        var oneDay = 1000 * 60 * 60 * 24;
-        var todayyearday = Math.floor(difftoday / oneDay);
-
-        var diffevent = (eventDay - start) + ((start.getTimezoneOffset() - eventDay.getTimezoneOffset()) * 60 * 1000);
-        var eventyearday = Math.floor(diffevent / oneDay);
+          let eventDay = oth[i].date[x] !== undefined ? oth[i].date[x] : oth[i].date;
+          eventDay = eventDay instanceof Date ? eventDay : eventDay[0]
+          eventDay = eventDay instanceof Date ? eventDay : new Date(eventDay)
 
 
-        if (diffDays <= 6 && ((eventyearday >= todayyearday && eventDay.getDay() >= today.getDay()) || (eventyearday < todayyearday && eventDay.getDay() < today.getDay()))) {
+          var start = new Date(today.getFullYear(), 0, 0);
+          var difftoday = (today - start) + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
+          var oneDay = 1000 * 60 * 60 * 24;
+          var todayyearday = Math.floor(difftoday / oneDay);
 
-          event.time =
-            typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
+          var diffevent = (eventDay - start) + ((start.getTimezoneOffset() - eventDay.getTimezoneOffset()) * 60 * 1000);
+          var eventyearday = Math.floor(diffevent / oneDay);
 
-          event.date = eventDay;
-          let temptitles = []
-          temptitles = event.title.split(" - ")
-          event.title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
-          let game = this.state.games.find(elm => event.title.includes(elm))
-          displaySun = sun
-          displaySat = sat
-          displayMon = mon
-          displayTue = tues
-          displayWed = wed
-          displayThu = thurs
-          displayFri = fri
 
-          if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
-            switch (eventDay.getDay()) {
-              case 0:
-                //search for weekly events and remove them
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displaySun = displaySun.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displaySun.push(event)
-                sun.push(event);
-                break;
-              case 1:
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displayMon = displayMon.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displayMon.push(event)
-                mon.push(event);
-                break;
-              case 2:
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displayTue = displayTue.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displayTue.push(event)
-                tues.push(event);
-                break;
-              case 3:
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displayWed = displayWed.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displayWed.push(event)
-                wed.push(event);
-                break;
-              case 4:
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displayThu = displayThu.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displayThu.push(event)
-                thurs.push(event);
-                break;
-              case 5:
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displayFri = displayFri.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displayFri.push(event)
-                fri.push(event);
-                break;
-              case 6:
-                if(game !== "MTG" && game !== "Magic the Gathering")
-                  displaySat = displaySat.filter(el=> !(el.tags.includes("Weekly") && el.tags.includes(game)))
-                displaySat.push(event)
-                sat.push(event);
-                break;
-              default:
-                break;
+          if (diffDays <= 6 && ((eventyearday >= todayyearday && eventDay.getDay() >= today.getDay()) || (eventyearday < todayyearday && eventDay.getDay() < today.getDay()))) {
+
+            event.time =
+              typeof oth[i].time !== typeof [] ? oth[i].time : oth[i].time[x];
+
+            event.date = eventDay;
+            let temptitles = []
+            temptitles = event.title.split(" - ")
+            let game
+            if (temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined)){
+              event.title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
+              game = this.state.games.find(elm => event.title.includes(elm))
+            }else{
+              event.title = temptitles.find(el => !weekdays.find(elm=> el.includes(elm)) )
+              game = this.state.games.find(elm => event.tags.includes(elm))
+    
             }
+              
+            
+            
+            
+
+
+            if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
+              switch (eventDay.getDay()) {
+                case 0:
+                  //search for weekly events and remove them
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displaySun = displaySun.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displaySun.push(event)
+                  sun.push(event);
+                  break;
+                case 1:
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displayMon = displayMon.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displayMon.push(event)
+                  mon.push(event);
+                  break;
+                case 2:
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displayTue = displayTue.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displayTue.push(event)
+                  tues.push(event);
+                  break;
+                case 3:
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displayWed = displayWed.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displayWed.push(event)
+                  wed.push(event);
+                  break;
+                case 4:
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displayThu = displayThu.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displayThu.push(event)
+                  thurs.push(event);
+                  break;
+                case 5:
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displayFri = displayFri.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displayFri.push(event)
+                  fri.push(event);
+                  break;
+                case 6:
+                  if (game !== "MTG" && game !== "Magic the Gathering")
+                    displaySat = displaySat.filter(el => !(el.tags.includes("Weekly") && el.tags.includes(game)))
+                  displaySat.push(event)
+                  sat.push(event);
+                  break;
+                default:
+                  break;
+              }
+          }
         }
       }
-      }
-      catch(ex){
-        
-        console.log("Event: "+oth[i].title +"\n"+ ex.stack)
+      catch (ex) {
+        console.log("Event: " + oth[i].title + "\n" + ex.stack)
       }
     }
 
@@ -1133,6 +1154,7 @@ class Calander extends React.Component {
       sunday: sun,
       other: oth
     });
+
 
     this.setCalander(oth, displayMon, displayTue, displayWed, displayThu, displayFri, displaySat, displaySun);
   }
@@ -1278,42 +1300,49 @@ class Calander extends React.Component {
       } else {
         line["sunday"] = undefined;
       }
+
       if (mon[i] !== undefined) {
         set = 1;
         line["monday"] = mon[i];
       } else {
         line["monday"] = undefined;
       }
+
       if (tues[i] !== undefined) {
         set = 1;
         line["tuesday"] = tues[i];
       } else {
         line["tuesday"] = undefined;
       }
+
       if (wed[i] !== undefined) {
         set = 1;
         line["wednesday"] = wed[i];
       } else {
         line["wednesday"] = undefined;
       }
+
       if (thurs[i] !== undefined) {
         set = 1;
         line["thursday"] = thurs[i];
       } else {
         line["thursday"] = undefined;
       }
+
       if (fri[i] !== undefined) {
         set = 1;
         line["friday"] = fri[i];
       } else {
         line["friday"] = undefined;
       }
+
       if (sat[i] !== undefined) {
         set = 1;
         line["saturday"] = sat[i];
       } else {
         line["saturday"] = undefined;
       }
+
       if (set === 0) break;
       else table.push(line);
     }
