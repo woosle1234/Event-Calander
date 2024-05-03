@@ -115,14 +115,14 @@ class Calander extends React.Component {
         sun = [];
         oth = [];
         for (let i = 0; i < data.length; i++) {
-          
+
           try {
             if (data[i].variants.length > 1 || data[i].variants[0].option1.includes("P.M.") || data[i].variants[0].option1.includes("A.M.") || data[i].variants[0].option1.includes("PM") || data[i].variants[0].option1.includes("AM")) {
               oth.push(data[i]);
               let time = [];
               for (let x = 0; x < data[i].variants.length; x++) {
                 let title = data[i].variants[x].title.toUpperCase();
-                
+
                 let timeStr = title.substring(
                   title.includes("PM")
                     ? title.indexOf("PM") - 6
@@ -308,7 +308,7 @@ class Calander extends React.Component {
                     break;
                   default:
                     oth.push(data[i]);
-                    
+
                     let time = [];
                     for (let x = 0; x < data[i].variants.length; x++) {
                       let title = data[i].variants[x].title;
@@ -341,7 +341,7 @@ class Calander extends React.Component {
                 let otherevent = structuredClone(data[i]);
 
                 otherevent.title = otherevent.title.replace("Vaughan Events - ", "");
-                
+
 
                 let time = [];
                 let editedBody = otherevent.body_html
@@ -396,7 +396,7 @@ class Calander extends React.Component {
                 otherevent.time = time;
 
                 oth.push(otherevent);
-                
+
               }
             }
           }
@@ -406,17 +406,17 @@ class Calander extends React.Component {
             console.log("Event: " + data[i].title + "\n" + ex.stack)
           }
         }
-        
-        
+
+
         this.setOtherEvents(oth, mon, tues, wed, thurs, fri, sat, sun);
-        
-        
+
+
 
       })
-    // .catch((err) => {
-    //   this.setState({ loading: false });
-    //   console.log("Cannot get data from 401 games " + err);
-    // });
+      .catch((err) => {
+        this.setState({ loading: false });
+        console.log("Cannot get data from 401 games " + err);
+      });
 
   }
 
@@ -1057,18 +1057,18 @@ class Calander extends React.Component {
             let temptitles = []
             temptitles = event.title.split(" - ")
             let game
-            if (temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined)){
+            if (temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined)) {
               event.title = temptitles.find(el => this.state.games.find(elm => el.includes(elm)) !== undefined);
               game = this.state.games.find(elm => event.title.includes(elm))
-            }else{
-              event.title = temptitles.find(el => !weekdays.find(elm=> el.includes(elm)) )
+            } else {
+              event.title = temptitles.find(el => !weekdays.find(elm => el.includes(elm)))
               game = this.state.games.find(elm => event.tags.includes(elm))
-    
+
             }
-              
-            
-            
-            
+
+
+
+
 
 
             if (eventDay instanceof Date && !isNaN(eventDay.valueOf()))
